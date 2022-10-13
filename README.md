@@ -1,8 +1,8 @@
 # SiSehat
 
-### [Link Aplikasi](si-sehat.herokuapp.com)
+## [Link Aplikasi](si-sehat.herokuapp.com)
 
-### Anggota Kelompok:
+#### Anggota Kelompok:
 1. Abby Marvel Immanuel Parasian Pribadi
 2. Adly Renadi Raksanagara
 3. Bryan Raihan 'ilman
@@ -16,5 +16,5 @@ Aplikasi **SiSehat** ini dibuat untuk membantu masyarakat menyimpan riwayat pera
 1. Admin (hanya untuk verifikasi)
 2. Tambah Riwayat (menambah riwayat pasien)
 3. Lihat Riwayat (melihat riwayat pasien tertentu)
-4. Halaman Utama & Login ( menampilkan halaman utama yang berisi deskripsi SiSehat dan menampilkan halaman login untuk pasien dan rumah sakit)
+4. Halaman Utama & Login (menampilkan halaman utama yang berisi deskripsi SiSehat dan menampilkan halaman login untuk pasien dan rumah sakit)
 5. Register (menambah pengguna pasien dan rumah sakit)
