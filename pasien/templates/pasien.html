@@ -10,9 +10,7 @@
         background-image: linear-gradient(#f0ead2, #b9ca88);
     }
 
-    .inline-margin {
-        margin: 0px 4px 0px 4px;
-    }
+    .flex-gap {gap: 12px;}
 
     .box-shadow {
         box-shadow: rgba(50, 50, 92, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.28) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
@@ -31,6 +29,21 @@
         background-image: linear-gradient(#94a168, #606c38);
     }
 
+    .search-bar {flex-flow: row wrap;}
+
+    .card-design {
+        width: 100%;
+        margin-bottom: 6px;
+        
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 20px;
+        border-color: #70706e;
+
+        background-color: #f6e8ba;
+        background-image: linear-gradient(#fff5d4, #f6e8ba)
+    }
+
     .round-button {
         display: inline-block;
         text-decoration: none;
@@ -40,7 +53,7 @@
         outline: none;
 
         border-style: solid;
-        border-width: 0.2vw;
+        border-width: 2px;
 
         color: white;
         background-color: #a96f4a;
@@ -59,6 +72,24 @@
     .round-button:active {
         background-color: #906242;
     }
+
+    @media (max-width:675px) {
+        .search-bar {
+            margin-left: 4px; margin-right: 4px;
+        }
+    }
+
+    @media (max-width:955px) {
+        #pencarian-dokter {
+            width: 100%;
+        }
+    }
+
+    @media (min-width:956px) {
+        #pencarian-dokter {
+            width: 80%;
+        }
+    }
 </style>
 
 {% endblock meta %}
@@ -69,7 +100,7 @@
 <div class="p-2 d-flex flex-column" style="height: 100vh;">
 
     <!-- container body -->
-    <div class="d-flex flex-column" style="height: 84%;">
+    <div class="d-flex flex-column flex-gap" style="height: 84%;">
 
         <!-- button to homepage -->
         <div width="100%">
@@ -78,16 +109,16 @@
 
         <!-- search bar -->
         <div class="card box-shadow main-content" style="width: auto;">
-            <div class="card-body d-flex flex-row align-items-center">
-                <span class="inline-margin">Cari dokter berdasarkan nama</span>
+            <div class="card-body d-flex flex-row align-items-center search-bar flex-gap">
+                <span>Cari dokter berdasarkan nama</span>
 
                 <!-- text input -->
-                <span class="inline-margin"><input class="form-control" type="text" size="16"></span>
+                <span><input class="form-control" type="text" size="16"></span>
 
-                <span class="inline-margin">dan rumah sakit</span>
+                <span>dan rumah sakit</span>
 
                 <!-- select option(s) -->
-                <span class="inline-margin">
+                <span>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
@@ -101,10 +132,10 @@
         </div>
 
         <!-- search result -->
-        <div class="p-2 d-flex flex-column align-items-center" style="height: 0; width: 80%; flex-grow: 1; margin: auto; overflow: scroll;">
+        <div id="pencarian-dokter" class="d-flex flex-column align-items-center" style="height: 0; flex-grow: 1; margin: auto; overflow: scroll;">
             
             <!-- result item(s)-->
-            <div class="card box-shadow" style="width: 100%;">
+            <div class="card box-shadow card-design">
                 <div class="card-body">
                     This is some text within a card body.
                 </div>
@@ -135,17 +166,17 @@
 
     <!-- container body -->
     <div class="card text-center box-shadow main-content" style="height: 90vh; width: 92vw;">
-        <div class="card-body d-flex flex-column">
+        <div class="card-body d-flex flex-column flex-gap" style="padding: 8px 4px;">
 
             <!-- content title -->
             <h2 class="card-title">Riwayat Penyakit</h2>
 
             <!-- search bar -->
-            <div class="d-flex flex-row justify-content-center align-items-center">
-                <span class="inline-margin">Saring berdasarkan nama penyakit</span>
+            <div class="d-flex flex-row justify-content-center align-items-center search-bar flex-gap">
+                <span>Saring berdasarkan penyakit</span>
 
                 <!-- select option(s) -->
-                <span class="inline-margin">
+                <span>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
@@ -156,10 +187,10 @@
                     </div>
                 </span>
 
-                <span class="inline-margin">nama dokter</span>
+                <span>dokter</span>
 
                 <!-- select option(s) -->
-                <span class="inline-margin">
+                <span>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
@@ -170,10 +201,10 @@
                     </div>
                 </span>
 
-                <span class="inline-margin">nama rumah sakit</span>
+                <span>dan rumah sakit</span>
                 
                 <!-- select option(s) -->
-                <span class="inline-margin">
+                <span>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
@@ -186,10 +217,10 @@
             </div>
 
             <!-- search result -->
-            <div class="p-2 d-flex flex-column align-items-center" style="height: 0; width: 100%; flex-grow: 1; margin: auto; overflow: scroll;">
+            <div class="d-flex flex-column align-items-center" style="height: 0; width: 100%; flex-grow: 1; margin: auto; overflow: scroll; color: black;">
             
                 <!-- result item(s)-->
-                <div class="card box-shadow" style="width: 100%;">
+                <div class="card box-shadow card-design">
                     <div class="card-body">
                         This is some text within a card body.
                     </div>
@@ -226,17 +257,17 @@
 
     <!-- container body -->
     <div class="card text-center box-shadow main-content" style="height: 90vh; width: 92vw;">
-        <div class="card-body d-flex flex-column">
+        <div class="card-body d-flex flex-column flex-gap" style="padding: 8px 4px;">
 
             <!-- content title -->
             <h2 class="card-title">Riwayat Obat</h2>
 
             <!-- search bar -->
-            <div class="d-flex flex-row justify-content-center align-items-center">
-                <span class="inline-margin">Saring berdasarkan nama obat</span>
+            <div class="d-flex flex-row justify-content-center align-items-center search-bar flex-gap">
+                <span>Saring berdasarkan obat</span>
 
                 <!-- select option(s) -->
-                <span class="inline-margin">
+                <span>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
@@ -247,10 +278,10 @@
                     </div>
                 </span>
 
-                <span class="inline-margin">nama dokter</span>
+                <span>dokter</span>
 
                 <!-- select option(s) -->
-                <span class="inline-margin">
+                <span>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
@@ -261,10 +292,10 @@
                     </div>
                 </span>
 
-                <span class="inline-margin">nama rumah sakit</span>
+                <span>dan rumah sakit</span>
                 
                 <!-- select option(s) -->
-                <span class="inline-margin">
+                <span>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
@@ -277,10 +308,10 @@
             </div>
 
             <!-- search result -->
-            <div class="p-2 d-flex flex-column align-items-center" style="height: 0; width: 100%; flex-grow: 1; margin: auto; overflow: scroll;">
+            <div class="d-flex flex-column align-items-center" style="height: 0; width: 100%; flex-grow: 1; margin: auto; overflow: scroll;  color: black;">
             
                 <!-- result item(s)-->
-                <div class="card box-shadow" style="width: 100%;">
+                <div class="card box-shadow card-design">
                     <div class="card-body">
                         This is some text within a card body.
                     </div>
@@ -313,7 +344,20 @@
 </div>
 
 <script>
+    function adjustSearchBar() {
+        if (window.outerWidth < 676) {
+            $('.search-bar').removeClass('justify-content-center');
+            $('.search-bar').addClass('justify-content-start');
+        }
 
+        if (window.outerWidth >= 676) {
+            $('.search-bar').removeClass('justify-content-start');
+            $('.search-bar').addClass('justify-content-center');
+        }
+    }
+
+    window.onresize = adjustSearchBar;
+    adjustSearchBar()
 </script>
 
 {% endblock content %}
