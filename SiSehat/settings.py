@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # custom apps
     'halaman_utama',
     'accounts',
+    'registrasi',
     'pasien',
 ]
 

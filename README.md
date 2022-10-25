@@ -15,27 +15,32 @@ Aplikasi **SiSehat** ini dibuat untuk membantu masyarakat menyimpan riwayat pera
 #### [color palette](https://coolors.co/palette/f0ead2-e7e8c4-dde5b6-c5d397-b9ca88-adc178-a98467-95755e-806755-6c584c)
 
 ## Daftar modul yang akan diimplementasikan
+#### 0. Accounts
+- Models: User (atribut: nomor_induk_kependudukan, nama_pengguna, adalah_pasien, adalah_dokter)
+- Routing: -
+- Form: -
+
 #### 1. Halaman Utama
 - Models: Feedback (atribut: nama, pesan)
 - Routing: Halaman Utama, Login Pasien, Login Dokter
 - Form: Feedback Website
 
 #### 2. Registrasi (Login, Register)
-- Models: Pasien (atribut: nomor_induk_kependudukan, nama_pengguna), Dokter (atribut: nomor_induk_kependudukan, nama_pengguna, nama_rumah_sakit)
+- Models: Pasien (atribut: user), Dokter (atribut: user, nama_rumah_sakit)
 - Routing: Halaman Utama, Login Dokter, Login Pasien, Registrasi Dokter, Registrasi Pasien
 - Form: Registrasi, Login
 
 #### 3. Pasien
-- Models: Keluhan (atribut: pasien (FK), dokter (FK), tema, pesan), Penyakit, Obat, Pasien, Dokter 
+- Models: Keluhan (atribut: pasien (FK), dokter (FK), tanggal, tema, deskripsi), Penyakit, Obat, Pasien, Dokter 
 - Routing: Halaman Utama, Pasien
 - Form: Tambah Keluhan Penyakit
 
 #### 4. Dokter
-- Models: Penyakit (atribut: pasien (FK), dokter (FK), nama_penyakit, deskripsi), Obat, Pasien, Dokter 
+- Models: Penyakit (atribut: pasien (FK), dokter (FK), tanggal, nama_penyakit, deskripsi), Obat, Pasien, Dokter 
 - Routing: Halaman Utama, Obat, Dokter
 - Form: Tambah Riwayat Penyakit
 
 #### 5. Obat
-- Models:  Obat (atribut: pasien (FK), dokter (FK), nama_obat, deskripsi), Pasien, Dokter 
+- Models:  Obat (atribut: pasien (FK), dokter (FK), tanggal, nama_obat, deskripsi), Pasien, Dokter 
 - Routing: Halaman Utama, Obat
 - Form: Tambah Obat 
