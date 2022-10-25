@@ -16,26 +16,26 @@ Aplikasi **SiSehat** ini dibuat untuk membantu masyarakat menyimpan riwayat pera
 
 ## Daftar modul yang akan diimplementasikan
 #### 1. Halaman Utama
-- Models: Feedback
+- Models: Feedback (atribut: nama, pesan)
 - Routing: Halaman Utama, Login Pasien, Login Dokter
 - Form: Feedback Website
 
 #### 2. Registrasi (Login, Register)
-- Models: Pasien, Dokter
+- Models: Pasien (atribut: nomor_induk_kependudukan, nama_pengguna), Dokter (atribut: nomor_induk_kependudukan, nama_pengguna, nama_rumah_sakit)
 - Routing: Halaman Utama, Login Dokter, Login Pasien, Registrasi Dokter, Registrasi Pasien
 - Form: Registrasi, Login
 
 #### 3. Pasien
-- Models: Keluhan, Penyakit, Obat, Pasien, Dokter 
+- Models: Keluhan (atribut: pasien (FK), dokter (FK), tema, pesan), Penyakit, Obat, Pasien, Dokter 
 - Routing: Halaman Utama, Pasien
 - Form: Tambah Keluhan Penyakit
 
 #### 4. Dokter
-- Models: Penyakit, Obat, Pasien, Dokter 
+- Models: Penyakit (atribut: pasien (FK), dokter (FK), nama_penyakit, deskripsi), Obat, Pasien, Dokter 
 - Routing: Halaman Utama, Obat, Dokter
 - Form: Tambah Riwayat Penyakit
 
 #### 5. Obat
-- Models:  Obat, Pasien, Dokter 
+- Models:  Obat (atribut: pasien (FK), dokter (FK), nama_obat, deskripsi), Pasien, Dokter 
 - Routing: Halaman Utama, Obat
 - Form: Tambah Obat 
