@@ -1,0 +1,21 @@
+.navbar-brand{
+  size: 90;
+  font-family: Bungee;
+}
+.nav-link:hover::after{
+  content:  '';
+  display: block;
+  border-bottom: 2px solid blue;
+  width: 50%;
+  margin: auto;
+  padding-bottom: 2px;
+  margin-bottom: -8px ;
+}
+.nav-link{
+    font-family: Bungee;
+    text-transform: uppercase;
+    margin-right: 40px;
+}
+.navbar-nav{
+  margin-left: 500px;
+} 
