@@ -44,7 +44,7 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser):
-    nama_pengguna = models.CharField(max_length=64)
+    nama_pengguna = models.CharField(max_length=64, primary_key=True)
 
     # atribut django
     is_staff = models.BooleanField(default=False)
@@ -56,13 +56,13 @@ class User(AbstractBaseUser):
     object = UserManager()
 
     def __str__(self):
-        return self.nomor_induk_kependudukan
+        return self.nama_pengguna
 
     def get_full_name(self):
-        return self.nama_pengguna
+        return None
 
     def get_short_name(self):
-        return self.nama_pengguna
+        return None
 
     def has_perm(self, perm, obj=None):
         return True

@@ -12,7 +12,7 @@ class MendaftarPasien(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('nomor_induk_kependudukan',)
+        nomor_induk_kependudukan = models.BigIntegerField(validators=[MinValueValidator(nomor_terkecil),MaxValueValidator(nomor_terbesar)], primary_key=True)
 
     @transaction.atomic
     def save(self):
@@ -35,7 +35,6 @@ class MendaftarDokter(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('nomor_induk_kependudukan', 'nama_rumah_sakit')
 
     @transaction.atomic
     def save(self):
