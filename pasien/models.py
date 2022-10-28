@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.db import models
 
-from accounts.models import Dokter, Pasien
+from registrasi.models import Dokter, Pasien
 
 class Keluhan(models.Model):
     pasien = models.ForeignKey(Pasien, on_delete=models.DO_NOTHING)

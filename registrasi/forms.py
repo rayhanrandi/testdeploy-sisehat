@@ -1,13 +1,14 @@
-from accounts.admin import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models, transaction
 
-from accounts.models import Dokter, Pasien, User
+from .models import Dokter, Pasien
 
 # jangkauan nomor_induk_kependudukan
 nomor_terkecil = 2_000_000_000_000_000; nomor_terbesar = 10_000_000_000_000_000
 
-class MendaftarPasien(UserCreationForm):
+class MendaftarPasien():
     nomor_induk_kependudukan = models.BigIntegerField(validators=[MinValueValidator(nomor_terkecil),MaxValueValidator(nomor_terbesar)], primary_key=True)
 
     class Meta(UserCreationForm.Meta):
