@@ -41,13 +41,14 @@ INSTALLED_APPS = [
     
     # custom apps
     'halaman_utama',
-    'accounts',
     'registrasi',
     'pasien',
+<<<<<<< HEAD
     'crispy_forms',
+=======
+    'dokter',
+>>>>>>> 882bedaea9dc3f328d5680fc8e37f7400d0d1c8a
 ]
-
-AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,4 +133,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')

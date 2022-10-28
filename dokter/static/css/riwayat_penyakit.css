@@ -1,0 +1,98 @@
+:root {
+    --base: #eae0cc;
+    --secondary: #798478;
+    --tertiary: #a0a083;
+    --accent1: #4d6a6d;
+    --accent2: #c9ada1;
+    --red: #DC3545;
+    --blue: #0D6AF4;
+    --green: #198754;
+}
+
+body {
+    text-align: center;
+    background: var(--base);
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 80%;
+    background-color: #79847875;
+}
+
+table, th, td {
+    border: 1px solid rgb(0, 0, 0);
+}
+
+th, tr, td {
+    width: auto;
+}
+
+.table-header {
+  background-color: #4d6a6d75;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.navbar {
+    background-color: var(--accent1);
+    height: 100px;
+}
+
+.page-title {
+  margin-left: 10%;
+  text-align: left;
+  color: var(--accent1);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bolder;
+  text-shadow: -0.2px -0.2px 0 black, 0.2px -0.2px 0 black, -0.2px 0.2px 0 black, 0.2px 0.2px 0 black;;
+}
+
+.note {
+  font-style: italic;
+  font-size: smaller;
+}
+
+#title {
+    font-family: Tahoma, sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    font-variant: small-caps;
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+}
+
+#penyakit-toggle {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+a:link {
+    color: var(--white);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: var(--white);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--white);
+    background-color: transparent;
+    text-decoration: none;
+}
