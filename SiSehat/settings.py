@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'halaman_utama',
     'registrasi',
     'pasien',
+    'dokter',
 ]
 
 MIDDLEWARE = [

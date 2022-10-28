@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+
+  {% block meta %}
+  <title>Lihat Riwayat Penyakit</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="{% static 'css/riwayat_penyakit.css' %}">
+  <script src="{% static 'js/riwayat_penyakit.js' %}"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+  <script>
+    $(document).ready(function () {
+      $('select').selectize({
+          sortField: 'text'
+      });
+    });
+  </script>
+  {% endblock meta %}
+  
+</head>
+
+{% block content %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 style="font-weight: bold;"class="modal-title fs-5" id="staticBackdropLabel">Add Penyakit</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="penyakit-form">
+          <form class="new-penyakit" id="form">
+            {% csrf_token %}
+            <h6>Nama Penyakit:</h6>
+            <!-- <input id="nama-penyakit" type="text" name="nama-penyakit" placeholder="Nama Penyakit"></input> -->
+            {{ form.nama_penyakit }}
+            <h6>Pesan:</h6>
+            <!-- <textarea id="keluhan" type="text" name="keluhan" placeholder="Keluhan"></textarea> -->
+            {{ form.deskripsi_keluhan }}
+        </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="button" type="submit" class="btn btn-success" onclick=addPenyakit()>Add Penyakit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<body>
+
+    <nav class="navbar">
+      <div class="container-fluid">
+        <a id="title" class="navbar-brand" href="">SiSehat</a>
+        <button id="navbar-buttons" type="button" class="btn btn-danger"><a href="">Logout</a></button>
+      </div>
+    </nav>
+
+    <div class="page-title">
+      <br><br>
+      <h1 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Lihat Riwayat Penyakit</h1>
+    </div>
+
+    <div class="content">
+        
+        <br>
+
+        <label for="daftar-pasien" style="font-weight: bold;">Pilih pasien (NIK):</label>
+        <select name="pasien" id="daftar-pasien" placeholder="Pilih pasien (NIK)...">
+            {% for pasien in list_pasien %}
+                <option>{{ pasien.nomor_induk_kependudukan }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button id="select-pasien" type="submit" class="btn btn-success" onclick=getPenyakit()>Lihat Riwayat</button>
+        <br><br>
+        
+        <h6 class="note">*klik tombol status pada kolom sembuh untuk men-set status kesembuhan</h6>
+        <table class="display">
+          <tr class="table-header">
+            <th>Nama Penyakit</th>
+            <th>Tanggal Diagnosis</th>
+            <th>Pesan Dokter</th>
+            <th>Sembuh</th>
+          </tr>
+        </table>
+        <br>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Add Penyakit
+        </button>
+
+    </div>
+
+</body>
+
+
+{% endblock content %}
