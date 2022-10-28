@@ -1,21 +1,393 @@
-.navbar-brand{
-  size: 90;
-  font-family: Bungee;
+/* 
+---------------------------------------------
+font & reset css
+--------------------------------------------- 
+*/
+/* 
+---------------------------------------------
+reset
+--------------------------------------------- 
+*/
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+em,
+font,
+img,
+i,
+center,
+ol,
+ul,
+li,
+header,
+nav,
+section,
+article,
+footer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
 }
+
+header,
+nav,
+section,
+article,
+aside,
+footer {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  font-family: Tahoma, sans-serif;
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+h1,
+h2{
+  color : #4d6a6d;
+  font-weight: bolder;
+}
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+ul {
+  margin-bottom: 0px;
+}
+
+p {
+  font-size: 15px;
+  line-height: 30px;
+  font-weight: 300;
+  color: #4d6a6d;
+}
+
+img {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 
+---------------------------------------------
+global styles
+--------------------------------------------- 
+*/
+html,
+body {
+  background: #e8f7fc;
+  font-family: Tahoma, sans-serif;
+}
+
+.navbar-brand{
+  color: #EAE0CC;
+  font-size: 70px;
+  font-family: Tahoma, sans-serif;
+  /* text-shadow: 2px 2px 8px #FFF; */
+  font-weight: bolder;
+}
+.navbar{
+  background-color: #4d6a6d;
+  
+}
+
 .nav-link:hover::after{
   content:  '';
   display: block;
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid #EAE0CC;
   width: 50%;
   margin: auto;
   padding-bottom: 2px;
   margin-bottom: -8px ;
+  font-size: 70px;
+  font-weight: bolder;
 }
 .nav-link{
-    font-family: Bungee;
+    color: #EAE0CC;
+    font-family: Tahoma, sans-serif;
     text-transform: uppercase;
     margin-right: 40px;
+    font-size: 15px;
+    font-weight: bolder;
 }
-.navbar-nav{
-  margin-left: 500px;
-} 
+
+#btnLogin{
+  background-color: #A0A083;
+}
+
+.border-first-button a {
+  display: inline-block !important;
+  padding: 10px 20px !important;
+  color: #4d6a6d !important;
+  border: 1px solid #4d6a6d !important;
+  border-radius: 23px;
+  font-weight: 500 bolder !important;
+  letter-spacing: 0.3px !important;
+  transition: all 0.5s;
+
+}
+
+
+.border-first-button a:hover {
+  background-color: #4d6a6d;
+  color: #fff !important;
+
+}
+
+
+
+/* 
+---------------------------------------------
+halaman utama Style
+--------------------------------------------- 
+*/
+
+.main-banner {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 226px 0px 120px 0px;
+  position: relative;
+  overflow: hidden;
+  background-color: #EAE0CC;
+}
+
+.main-banner .left-content {
+  margin-right: 15px;
+}
+/* untuk tulisan judul sisehat */
+.main-banner .left-content h6 {
+  text-transform: capitalize;
+  font-size: 40px;
+  /* untuk bold text */
+  font-weight: 1000;
+  color: #4d6a6d;
+  margin-bottom: 15px;
+}
+/* text reminder appnya */
+.main-banner .left-content h2 {
+  position: relative;
+  font-weight: 700;
+  font-size: 50px;
+  color: #4d6a6d;
+  margin-bottom: 20px;
+}
+
+.main-banner .left-content p {
+  margin-bottom: 30px;
+  margin-right: 45px;
+  color: #4d6a6d;
+}
+/* ilustrasi awal */
+.main-banner .right-image {
+  text-align: right;
+  position: relative;
+  z-index: 20;
+}
+
+.main-banner .right-image img {
+  max-width: 593px;
+}
+
+/* 
+---------------------------------------------
+About Style
+--------------------------------------------- 
+*/
+
+#about {
+  padding-top: 130px;
+  background-color: #798478;
+}
+
+
+.about-right-content h6 {
+  font-weight: 1000;
+  width: 700px;
+  height: 70px;
+  color: #EAE0CC;
+  font-size: 20px;
+
+  margin-bottom: 280px;
+}
+.about-right-content h4 {
+  font-weight: 300;
+  color: #EAE0CC;
+  margin-bottom: 280px;
+  margin-top: -290px;
+  font-size: 48px;
+}
+.about-left-image img {
+  margin-right: 35px;
+}
+
+.about-right-content p {
+  margin-top: -250px;
+  margin-bottom: 280px;
+  color: #EAE0CC;
+}
+
+/* 
+---------------------------------------------
+Services Style
+--------------------------------------------- 
+*/
+
+.services {
+  padding-top: 130px;
+  background-color: #EAE0CC;
+}
+/* Header service atau fitur */
+.services .section-heading {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.section-heading h6 {
+  font-weight: 1000;
+  color: #4d6a6d;
+  font-size: 50px;
+}
+.section-heading h4 {
+  font-weight: 300;
+  color: #4d6a6d;
+  font-size: 48px;
+}
+#card-fitur {
+  border-radius: 20px;
+  margin-bottom: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-left: auto;
+  width: 360px;
+}
+
+/* 
+---------------------------------------------
+card ourteam Style
+--------------------------------------------- 
+*/
+#ourteam{
+  background-color: #798478;
+  padding-bottom: 100px;
+}
+#iniourteam{
+  background-color: #798478;
+}
+
+/* 
+---------------------------------------------
+Feedback Style
+--------------------------------------------- 
+*/
+
+#card-content {
+  width: 600px;
+  margin-right: auto;
+  margin-top: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+}
+#feedback.feedback.section{
+  background-color: #EAE0CC;
+}
+
+
+/* 
+---------------------------------------------
+Button feedback
+--------------------------------------------- 
+*/
+.button-feedback{
+  color: 12;
+}
+
+/* 
+---------------------------------------------
+untuk membuat web menjadi responsive
+--------------------------------------------- 
+*/
+
+@media (max-width: 1200px) {
+  .header-area .main-nav .logo h4 {
+    font-size: 24px;
+  }
+  .header-area .main-nav .logo h4 img {
+    max-width: 25px;
+    margin-left: 0px;
+  }
+  .header-area .main-nav .nav li:last-child {
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .header-area .main-nav .logo h4 {
+    font-size: 20px;
+  }
+  .main-banner .left-content {
+    margin-right: 0px;
+  }
+  .main-banner {
+    text-align: center;
+    padding: 226px 0px 30px 0px;
+  }
+
+  .main-banner .right-image {
+    margin: 30px auto 0px auto;
+    text-align: center;
+  }
+
+  .about-left-image img {
+    margin-right: 0px;
+    margin-bottom: 45px;
+  }
+
+  .about-us .left-image {
+    margin-right: 30px;
+    margin-left: 30px;
+    margin-bottom: 45px;
+  }
+}
+
+@media (max-width: 767px) {
+  .header-area .main-nav .logo h4 {
+    font-size: 30px;
+  }
+  .header-area .main-nav .logo h4 img {
+    max-width: 30px;
+    margin-left: 5px;
+  }
+
+  .section-heading,
+  .about-us .section-heading,
+  .about-us .about-item,
+  .about-us p,
+  .about-us {
+    text-align: center;
+  }
+  .about-us .about-item {
+    margin-top: 15px;
+  }
+}

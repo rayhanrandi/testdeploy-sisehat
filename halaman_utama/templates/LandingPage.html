@@ -1,76 +1,216 @@
 <!doctype html>
 
 {% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee">
-    <!--CSS LandingPage-->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <title>SiSehat</title>
-    
-  </head>
-  <body>
-    <!-- Navbar -->
+<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+<style>
+  /* team card */
+  .cardDua {
+    width: 240px;
+    height: 310px;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: .5s;
+    justify-content: center;
+    align-content: center;
+    display: flex;
 
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Sisehat</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link " aria-current="page" href="#">Home</a>
-              <a class="nav-link" href="#about">About</a>
-              <a class="nav-link" href="#layanan">Layanan</a>
-              <a class="nav-link "href="#feedback">Feedback</a>
-              <a class="nav-link btn btn-primary">Login</a>
+  }
 
-              {% if user.is_authenticated %}
-              <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{ user.get_username }}</li>
-              <li class="scroll-to-section"><div class="border-first-button"><a href="/authentication/log-out">Logout</a></div></li> 
-              {% else %}
-              <li class="scroll-to-section"><div class="border-first-button"><a href="/authentication/login">Login</a></div></li> 
-              {% endif %}     
-            </div>
+  .card-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    transition: .5s;
+    overflow: hidden;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .card-image img {
+    display: block;
+    width: 100%;
+  }
+
+  .social-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .5s;
+    display: flex;
+    z-index: 3;
+  }
+
+  .social-icons li {
+    list-style-type: none;
+  }
+
+  .social-icons li a {
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    background: #EAE0CC;
+    text-align: center;
+    font-size: 24px;
+    color: #A0A083;
+    margin: 0 5px;
+    transition: .5s;
+    transform: translateY(200px);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .detail {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #4D6A6D;
+    width: 100%;
+    height: 120px;
+    z-index: 1;
+    padding: 20px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .detail h2 {
+    margin: 0;
+    color: #A0A083;
+    font-size: 24px;
+  }
+
+  .jurusan {
+    font-size: 1rem;
+    line-height: 2.5rem;
+    color: #A0A083;
+    font-weight: 300;
+  }
+
+  .cardDua:hover img {
+    opacity: .4;
+    transition: .5s;
+  }
+
+  .cardDua:hover li a {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cardDua:hover li:nth-child(1) a {
+    transition-delay: .1s;
+  }
+
+  .cardDua:hover li:nth-child(2) a {
+    transition-delay: .2s;
+  }
+
+  .cardDua:hover li:nth-child(3) a {
+    transition-delay: .3s;
+  }
+
+  .cardDua:hover li:nth-child(4) a {
+    transition-delay: .4s;
+  }
+
+  .cardDua:hover .card-image {
+    transform: translateY(-120px);
+    transition: .5s;
+  }
+  #headjudul{
+    font-weight: 800;
+    font-size: 50;
+  }
+
+</style>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tahoma">
+  <!--CSS LandingPage-->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="icon" href="{%static 'images/logo.png' %}" type="image/icon type">
+  <title >SiSehat</title>
+
+</head>
+
+<body>
+  <!-- Navbar -->
+
+  <nav class="navbar navbar-expand-lg ">
+    <div class="container">
+      <div class="container-fluid d-flex align-items-center justify-content-between w-full">
+        <a class="navbar-brand" href="#main"><img src="{%static 'images/logo.png' %}" alt="img" style="max-width: 90px; max-height: 90px; padding: left -20px; "></img> SiSehat</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link" id="idNavbar" aria-current="page" href="#main">Home</a>
+            <a class="nav-link" id="idNavbar" href="#about">About Us</a>
+            <a class="nav-link" id="idNavbar" href="#services">Features</a>
+            <a class="nav-link " id="idNavbar" href="#feedback">Feedback</a>
+
+            {% if user.is_authenticated %}
+            <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{
+              user.get_username }}</li>
+            <li class="scroll-to-section">
+              <div class="border-first-button"><a href="/authentication/log-out">Logout</a></div>
+            </li>
+            {% else %}
+            <a class="nav-link btn " id="btnLogin">Login</a>
+            <li class="scroll-to-section"><div class="border-first-button"><a href="#">Login</a></div></li> 
+            {% endif %}
           </div>
         </div>
       </div>
-    </nav>
-    <!-- akhir Navbar -->
+    </div>
+  </nav>
+  <!-- akhir Navbar -->
 
 
-    <!-- header utama web -->
-    <div id= "main" class="main-banner">
-      <div class="card-banner">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="row">
-                <div class="col-lg-6 align-self-center">
-                  <div class="left-content show-up header-text wow fadeInLeft">
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <h6>COVID ASSISTANT</h6>
-                        <h2>Reminder App untuk Pasien Covid</h2>
-                        <p>Covid Assistant akan membantu anda dalam progress penyembuhan dengan track record yang terstruktur. Terdapat beragam fitur yang dapat anda gunakan untuk mempermudah anda dalam memanage aktivitas anda dalam progress penyembuhan covid.</p>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="border-first-button scroll-to-section">
-                          <a href="#services">Mulai Sekarang</a>
-                        </div>
+  <!-- halaman main web -->
+  <div id="main" class="main-banner">
+    <div class="card-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-6 align-self-center">
+                <div class="left-content show-up header-text wow fadeInLeft">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <h6>SISEHAT</h6>
+                      <h2>Aplikasi Untuk membantu anda dalam tracking obat dan riwayat kesehatan</h2>
+                      <p>SiSehat akan membantu anda dalam progress penyembuhan dengan track record yang
+                        terstruktur. Terdapat beragam fitur yang dapat anda gunakan untuk mempermudah anda dalam
+                        memanage aktivitas anda dalam progress penyembuhan Penyakit yang dialami.</p>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="border-first-button scroll-to-section">
+                        <a href="#services">Mulai Sekarang</a>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="right-image wow fadeInRight">
-                    <img src="{%static 'assets/images/Person with a cold-pana 1.png' %}" alt="">
-                  </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="right-image wow fadeInRight">
+                  <img src="{%static 'images/dokter.png' %}" alt="">
                 </div>
               </div>
             </div>
@@ -78,10 +218,324 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- about -->
+  <div id="about" class="about section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="about-left-image  wow fadeInLeft">
+                <img src="{%static 'images/home.png' %}" alt="">
+              </div>
+            </div>
+            <div class="col-lg-6 align-self-center  wow fadeInRight">
+              <div class="about-right-content">
+                <div class="section-heading">
+                  <h6  style="color:#EAE0CC; font-weight: bolder;font-family: Tahoma, sans-serif ;">ABOUT US</h6>
+                  <h4 style="color: #EAE0CC; font-weight: bolder;font-family: Tahoma, sans-serif;">Jadi, Apa itu SiSehat?</h4>
+                </div>
+                <p>SiSehat yang merupakan aplikasi penyimpan riwayat penyakit dan tracking obat untuk pasien yang memiliki
+                 keluhan penyuakit. Tujuan dari aplikasi ini untuk mempermudah dalam tracking Obat dan riwayat penyakit dari pasien dan
+                  dokter untuk mudah mendiagnosa penyakit dan menambah kadar obat dalam progress penyembuhan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Layanan -->
+  <div id="services" class="services section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-heading  wow fadeInDown">
+            <h6 style="padding-bottom:20px; font-weight: bolder; margin-top: -70px;">FITUR SISEHAT</h6>
+            <h4 style="font-weight:bolder;">Dapat Melayani Anda Untuk</h4>
+          </div>
+        </div>
+        <div id="featured-3" class="container px-4 py-5">
+          <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div id="card-fitur" class="feature col">
+              <div class="icon-fitur">
+                <img height="300px" src="{%static 'images/obat.png' %}" alt="">
+              </div>
+              <br>
+              <h2>Lihat Obat</h2>
+              <br>
+              <p>Lihat obat adalah salah satu fitur yang ada di Website SiSehat. Layanan ini berfungsi
+                untuk mmengecek  Obat yang harus di konsumsi sesuai takaran dokter per waktunnya.</p>
+              <br>
+              <a href="/your-medicine">
+                <button style="border-radius: 100px; font-family: 'Tahoma';  background-color: #4d6a6d; width: 100%;" type="button"
+                  class="btn btn-primary btn-lg">Lihat Disini</button>
+              </a>
+            </div>
+            <div id="card-fitur" class="feature col">
+              <div class="icon-fitur">
+                <img height="300px" src="{%static 'images/checklist.png' %}" alt="">
+              </div>
+              <br>
+              <h2>Lihat Riwayat</h2>
+              <br>
+              <p>Lihat Riwayat adalah salah satu fitur dari Website SiSehat untuk mencatat riwayat penyakit pasien yang pernah berobat di rumah sakit dari mitra kami.</p>
+              <br>
+              <a href="/your-routine">
+                <button style="border-radius: 20px; font-family: 'Tahoma'; background-color: #4d6a6d;width: 100%;" type="button"
+                  class="btn btn-primary btn-lg">Lihat Disini</button>
+              </a>
+            </div>
+            <div id="card-fitur" class="feature col">
+              <div class="icon-fitur">
+                <img height="300px" src="{%static 'images/masker.png' %}" alt="">
+              </div>
+              <br>
+              <h2>Tambah Keluhan</h2>
+              <br>
+              <p>Tambah Keluhan adalah salah satu fitur untuk menambahkan keluhan yang dialamai sebelum berobat, agar memudahkan dokter untuk mendiagnosa terlebih dahulu.</p>
+              <br>
+              <a href="/food-schedule">
+                <button style="border-radius: 20px; font-family: 'Tahoma'; background-color: #4d6a6d; width: 100%;" type="button"
+                  class="btn btn-primary btn-lg">Lihat Disini</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- team -->
+
+  <div id="ourteam" class="team section">
+    <div class="container-fluid" style="background-color: #797979;">
+      <div class="col-lg-12" id="iniourteam"
+        style="display: flex; flex-wrap:wrap; gap: 50px;justify-content: center; padding-top: 64px; padding-bottom: 70px;">
+        <div style="font-family: 'Tahoma'; text-align: center;" class="section-heading  wow fadeInDown">
+          <h6 style="display: flex; flex-wrap:wrap; gap: 50px;justify-content: center; color: #EAE0CC;font-weight: bolder;padding-bottom: 30px;">DEVELOPER TEAM</h6>
+          <h4 style="display: flex; flex-wrap:wrap; gap: 50px;justify-content: center;color: #EAE0CC; padding-bottom: 65px;">"SISEHAT"</h4>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap:wrap; gap: 50px;justify-content: center;">
+
+      <div class="cardDua">
+        <div class="card-image">
+          <img src="{%static 'images/adly.jpg' %}" alt="">
+        </div>
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.instagram.com/adlyrndi/">
+              <i class='bx bxl-instagram'></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/cemuysapi">
+              <i class='bx bxl-twitter'></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/adly-renadi-3a52a8209/">
+              <i class='bx bxl-linkedin'></i>
+            </a>
+          </li>
+        </ul>
+        <div class="detail">
+          <h2>Adly Renadi Raksanagara</h2>
+          <span class="jurusan">Ilmu Komputer 2021</span>
+        </div>
+      </div>
+
+      <div class="cardDua">
+        <div class="card-image">
+          <img src="{%static 'images/abby.jpg' %}" alt="">
+        </div>
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.instagram.com/abbymarvel/">
+              <i class='bx bxl-instagram'></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class='bx bxl-twitter'></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://id.linkedin.com/in/abbymarvel">
+              <i class='bx bxl-linkedin'></i>
+            </a>
+          </li>
+        </ul>
+        <div class="detail">
+          <h2>Abby Marvel</h2>
+          <span class="jurusan">Sistem Informas 2021</span>
+        </div>
+      </div>
+
+      <div class="cardDua">
+        <div class="card-image">
+          <img src="{%static 'images/bryan.jpg' %}" alt="">
+        </div>
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.instagram.com/bryan.ilman/">
+              <i class='bx bxl-instagram'></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class='bx bxl-twitter'></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/bryan-ilman">
+              <i class='bx bxl-linkedin'></i>
+            </a>
+          </li>
+        </ul>
+        <div class="detail">
+          <h2>Bryan Raihan 'Ilman</h2>
+          <span class="jurusan">Ilmu Komputer 2021</span>
+        </div>
+      </div>
+
+      <div class="cardDua">
+        <div class="card-image">
+          <img src="{%static 'images/randi.jpg' %}" alt="">
+        </div>
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.instagram.com/rayhanrandi/">
+              <i class='bx bxl-instagram'></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class='bx bxl-twitter'></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/rayhan-putra-randi-28b9061bb">
+              <i class='bx bxl-linkedin'></i>
+            </a>
+          </li>
+        </ul>
+        <div class="detail">
+          <h2> Rayhan Putra Randi</h2>
+          <span class="jurusan">Ilmu Komputer 2021</span>
+        </div>
+      </div>
+
+      <div class="cardDua">
+        <div class="card-image">
+          <img src="{%static 'images/muyy.jpeg' %}" alt="">
+        </div>
+        <ul class="social-icons">
+          <li>
+            <a href="#">
+              <i class='bx bxl-instagram'></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class='bx bxl-twitter'></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class='bx bxl-linkedin'></i>
+            </a>
+          </li>
+        </ul>
+        <div class="detail">
+          <h2>Nadya Hoesin</h2>
+          <span class="jurusan">Ilmu Komputer 2021</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-  </body>
+  <!-- feedback -->
+  <div id="feedback" class="feedback section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div style="padding-top: 100px;" class="card-form  wow fadeInDown">
+            <div id="card-title" class="card-title">
+              <br>
+              <br>
+              <h6 style="text-align: center; font-weight: 700; color: #4d6a6d; font-size: 100px;padding-bottom: 8px;margin-top: -30px ;">
+                Feedback</h6>
+              <h4 style="text-align: center; font-weight: 700; font-size: 48px;color: #4d6a6d;">Tuliskan kesan-pesan dan feedback anda terhadap SISEHAT</h4>
+            </div>
+          </div>
+        </div>
+
+        <div id="feedback-content" class="container px-4 py-5">
+          <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 background-color: #EAE0CC">
+            <div id="card-content" class="feature col">
+              <form method="POST" id="form">
+                <table>
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                </table>
+                <div class="d-flex flex-column">
+                  <button
+                    style="border-radius: 16px; font-family: 'Tahoma'; margin-top: 20px; background-color: #4d6a6d;"
+                    type="submit" class="btn btn-primary btn-lg button-feedback">Kirim</button>
+                  <a href="/feedback">
+                    <button
+                      style="border-radius: 16px; font-family: 'Tahoma'; width: 100%; margin-top: 20px; background-color: #4d6a6d;"
+                      type="button" class="btn btn-primary btn-lg button-feedback">Lihat feedback</button>
+                  </a>
+                </div>
+              </form>
+              <script src="https://code.jquery.com/jquery-3.6.0.js"
+                integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+              <script>
+                const form = document.getElementById('form');
+                form.addEventListener("submit", handleSubmit);
+                function handleSubmit(e) {
+                  e.preventDefault();
+                  $.ajax({
+                    type: 'POST',
+                    url: "",
+                    data: $("#form").serialize(),
+                    dataType: 'json',
+                    success: handleSuccess
+                  })
+                }
+                function handleSuccess(data) {
+                  if (data.msg === 'Success') {
+                    form.reset();
+                    alert('Terima kasih, feedback anda berhasil ditambahkan!');
+                  }
+                }
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
