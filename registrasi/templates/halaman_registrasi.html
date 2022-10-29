@@ -1,9 +1,77 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Feedback</title>
+{% endblock meta %}
+
 
 {% block content %}
+<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
-<a href="/registrasi/registrasi-pasien/">Registrasi Pasien</a>
+<style>
+  .card:hover{
+    transform: scale(1.08);
+  }
+  #feedback{
+    background-color: #EAE0CC;
+  }
+  #judul{
+    color: #4D6A6D;
+    font-weight: 400;
+    font-size: 70px;
+    padding-bottom: 10%;
+  }
+</style>
+ 
+<!-- Navbar -->
 
-<a href="/registrasi/registrasi-dokter/">Registrasi Dokter</a>
+<nav class="navbar navbar-expand-lg ">
+  <div class="container">
+    <div class="container-fluid d-flex align-items-center justify-content-between w-full">
+      <a class="navbar-brand" href="/#main/"><img src="{%static 'images/logo.png' %}" alt="img" style="max-width: 90px; max-height: 90px; padding: left -20px; "></img> SiSehat</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link " aria-current="page" href="/#main/">Home</a>
+          <a class="nav-link" href="/#about/">About</a>
+          <a class="nav-link" href="/#services/">Layanan</a>
+          <a class="nav-link " href="/#feedback/">Feedback</a>
+
+          {% if user.is_authenticated %}
+          <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{
+            user.get_username }}</li>
+          <li class="scroll-to-section">
+            <div class="border-first-button"><a href="#">Logout</a></div>
+          </li>
+          {% else %}
+          <a class="nav-link btn " id="btnLogin">Login</a>
+          <!-- <li class="scroll-to-section"><div class="border-first-button"><a href="/authentication/login">Login</a></div></li>  -->
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- akhir Navbar -->
+
+<div class="container px-4 px-lg-5 text-center">
+    <div class="col-lg-12">
+        <div class="section-heading  wow fadeInDown" >
+            <br>
+          <h6 style="display: flex; flex-wrap:wrap; gap: 50px;justify-content: center;" id="judul">SIGN UP!</h6>
+        </div>
+    </div>      
+    <h3 class="mb-5"><em>Select below the type of account you want to create</em></h3>
+    <a  style="border-radius: 16px; font-family: 'Tahoma'; margin-top: 20px; background-color: #4d6a6d;" class="btn btn-primary btn-lg button-feedback" href="/registrasi/registrasi-pasien/">I'm a Patient</a>
+    <a  style="border-radius: 16px; font-family: 'Tahoma'; margin-top: 20px; background-color: #4d6a6d;" class="btn btn-primary btn-lg button-feedback" href="/registrasi/registrasi-dokter/">I'm a Doctor</a>
+    <br>
+    <br>
+    <a>Already have an account? <a href="/registrasi/halaman-masuk/">Login</a></a>
+</div>
 
 {% endblock content %}
