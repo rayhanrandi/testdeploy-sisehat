@@ -43,11 +43,8 @@ INSTALLED_APPS = [
     'halaman_utama',
     'registrasi',
     'pasien',
-<<<<<<< HEAD
     'crispy_forms',
-=======
     'dokter',
->>>>>>> 882bedaea9dc3f328d5680fc8e37f7400d0d1c8a
 ]
 
 MIDDLEWARE = [
