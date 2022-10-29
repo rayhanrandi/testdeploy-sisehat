@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>pasien masuk</title>
+{% endblock meta %}
+
+{% block content %}
+<form method="POST" action="/registrasi/pasien-masuk/">
+    {% csrf_token %}
+
+    {{ halaman_masuk.as_table }}
+
+    <button type="button" class="btn btn-light" style="margin-left:2%;">
+        <input class="btn" type="submit" value="masuk" style="color: black;">
+    </button>
+</form>
+
+{% if messages %}
+        {% for message in messages %}
+            <br><h6 style="margin-left:0.5%;">{{ message }}</h6>
+        {% endfor %}
+{% endif %}
+{% endblock content %}

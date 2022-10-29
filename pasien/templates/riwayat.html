@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block meta %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}" />
+<!-- load CSS -->
+<link rel="stylesheet" href="{% static 'css/riwayat.css' %}"/>
+
+<!-- load javascript -->
+<script src="{% static 'javascript/riwayat.js' %}"></script>
 {% endblock meta %}
 
 {% block content %}
@@ -13,9 +17,32 @@
     <!-- container body -->
     <div class="d-flex flex-column flex-gap" style="height: 84%;">
 
-        <!-- button to homepage -->
-        <div width="100%">
-            <button type="button" class="btn btn-success box-shadow" style="width: 120px; border-radius: 20px; border-style: solid; border-width: 2px; border-color: #224B0C;">Beranda</button>
+        <!-- set of buttons -->
+        <div class="d-flex flex-row flex-gap set-of-buttons">
+
+            <!-- button to homepage -->
+            <div>
+                <button type="button" class="btn btn-success box-shadow rectangular-button" style="width: 120px;" onclick="homepage()">Beranda</button>
+            </div>
+
+            {% if request.user.is_authenticated %} 
+            <!-- return button -->
+            <div style="margin: auto;">
+                <button type="button" class="btn btn-primary box-shadow rectangular-button" style="width: 160px;" onclick="bikinKeluhan()">
+                    {% if dokter is not None %}
+                    Lihat Keluhan
+                    {% else %}
+                    Bikin Keluhan
+                    {% endif %}
+                </button>
+            </div>
+
+            <!-- log out button  -->
+            <div>
+                <button type="button" class="btn btn-danger box-shadow rectangular-button" style="width: 120px;" onclick="logOut()">Keluar</button>
+            </div>
+            {% endif %}
+        
         </div>
 
         <!-- search bar -->
@@ -56,6 +83,7 @@
 
     </div>
 
+    {% if request.user.is_authenticated and dokter is None %} 
     <!-- container footer -->
     <div class="d-flex flex-column" style="height: 16%;">
 
@@ -69,9 +97,11 @@
         </a>
 
     </div>
+    {% endif %}
 
 </div>
 
+{% if request.user.is_authenticated and dokter is None %}
 <!-- screen-wide container -->
 <div id="riwayat-penyakit" class="d-flex flex-column" style="height: 100vh;">
 
@@ -253,6 +283,7 @@
     </div>
 
 </div>
+{% endif %}
 
 <script>
     function adjustSearchBar() {

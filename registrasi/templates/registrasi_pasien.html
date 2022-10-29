@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST" class="post-form" action="/registrasi/registrasi-pasien/">
+    {% csrf_token %}
+    {{ form_mendaftar_pasien.as_p }}
+    <button type="submit" class="save btn btn-secondary">Save</button>
+</form>
+
+{% if messages %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+{% endblock content %}

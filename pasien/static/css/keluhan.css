@@ -5,7 +5,7 @@ body {
     background-image: linear-gradient(#f0ead2, #b9ca88);
 }
 
-.flex-gap {gap: 12px;}
+.flex-gap {gap: 18px;}
 
 .box-shadow {
     box-shadow: rgba(50, 50, 92, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.28) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
@@ -24,7 +24,36 @@ body {
     background-image: linear-gradient(#94a168, #606c38);
 }
 
+.set-of-buttons {
+    flex-flow: row wrap;
+    
+    width: 100%;
+    margin: auto;
+}
+
+.rectangular-button {
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #224B0C;
+}
+
 .search-bar {flex-flow: row wrap;}
+
+.accordion-button {
+    background-color: #fff5d4;
+    background-image: linear-gradient(#fdf5dc, #fff5d4)
+}
+
+.accordion-button:hover {
+    background-color: #fff2c6;
+    background-image: linear-gradient(#fdf5dc, #fff2c6)
+}
+
+.accordion-button:active {    
+    background-color: #ffefb4;
+    background-image: linear-gradient(#fdf5dc, #ffefb4)
+}
 
 .card-design {
     width: 100%;
@@ -35,8 +64,8 @@ body {
     border-radius: 20px;
     border-color: #70706e;
 
-    background-color: #f6e8ba;
-    background-image: linear-gradient(#fff5d4, #f6e8ba)
+    background-color: #fdf5dc;
+    background-image: linear-gradient(#ffffff, #fdf5dc)
 }
 
 .round-button {
@@ -68,6 +97,10 @@ body {
     background-color: #906242;
 }
 
+@media (min-width:960px) {
+    .set-of-buttons {width: 960px;}
+}
+
 @media (max-width:675px) {
     .search-bar {
         margin-left: 4px; margin-right: 4px;
@@ -75,13 +108,13 @@ body {
 }
 
 @media (max-width:955px) {
-    #pencarian-dokter {
+    #pencarian-keluhan {
         width: 100%;
     }
 }
 
 @media (min-width:956px) {
-    #pencarian-dokter {
+    #pencarian-keluhan {
         width: 80%;
     }
 }

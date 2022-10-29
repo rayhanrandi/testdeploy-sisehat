@@ -27,3 +27,7 @@ class MendaftarDokter(UserCreationForm):
         memastikan_kata_sandi = "password" + "2"
 
         fields = ("username", "nomor_induk_kependudukan", "nama_rumah_sakit", membuat_kata_sandi, memastikan_kata_sandi)
+
+class HalamanMasuk(forms.Form):
+    username = forms.CharField(max_length=128)
+    password = forms.CharField(widget=forms.PasswordInput())

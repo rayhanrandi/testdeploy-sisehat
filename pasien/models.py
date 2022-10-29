@@ -1,6 +1,4 @@
-from datetime import datetime
 from django.db import models
-
 from registrasi.models import Dokter, Pasien
 
 class Keluhan(models.Model):

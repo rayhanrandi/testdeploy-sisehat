@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<!-- load CSS -->
+<link rel="stylesheet" href="{% static 'css/keluhan.css' %}"/>
+
+<!-- load javascript -->
+<script src="{% static 'javascript/keluhan.js' %}"></script>
+{% endblock meta %}
+
+{% block content %}
+
+<!-- screen-wide container -->
+<div class="p-2 d-flex flex-column" style="height: 100vh;">
+
+    <!-- container body -->
+    <div class="d-flex flex-column flex-gap" style="height: 100%;">
+
+        <!-- set of buttons -->
+        <div class="d-flex flex-row flex-gap set-of-buttons">
+
+            <!-- button to homepage -->
+            <div>
+                <button type="button" class="btn btn-success box-shadow rectangular-button" style="width: 120px;" onclick="homepage()">Beranda</button>
+            </div>
+
+            <!-- return button -->
+            <div style="margin: auto;">
+                <button type="button" class="btn btn-primary box-shadow rectangular-button" style="width: 160px;" onclick="lihatRiwayat()">Lihat Riwayat</button>
+            </div>
+
+            {% if pasien is not None %}
+            <!-- button to create complaint(s) -->
+            <div style="margin-right: auto;">
+            
+                <!-- trigger modal -->
+                <button type="button" class="btn btn-warning box-shadow rectangular-button" style="width: 160px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Bikin Keluhan
+                </button>
+                
+                <!-- modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Rincian Keluhan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="rincian-keluhan" method="POST" action="pasien/mengeluh/">
+                                {% csrf_token %}
+                                <div class="dropdown" style="margin: 4px; margin-bottom: 12px;">
+                                    <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        berikut
+                                    </button>
+                                    <ul class="dropdown-menu tarik-turun-dokter">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="d-flex flex-column flex-gap" style="margin: 4px;">
+                                {{ rincian_keluhan.as_table }}
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" onclick="bikinKeluhan()">Kirim</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+
+            <!-- log out button  -->
+            <div>
+                <button type="button" class="btn btn-danger box-shadow rectangular-button" style="width: 120px;" onclick="logOut()">Keluar</button>
+            </div>
+        
+        </div>
+
+        <!-- search bar -->
+        <div class="card box-shadow main-content" style="width: auto;">
+            <div class="card-body d-flex flex-row align-items-center search-bar flex-gap">
+                <span>Cari keluhan berdasarkan tema</span>
+
+                <!-- text input -->
+                <span><input class="form-control" type="text" size="16"></span>
+
+                <span>dan rumah sakit</span>
+
+                <!-- select option(s) -->
+                <span>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            berikut
+                        </button>
+                        <ul class="dropdown-menu tarik-turun-rumah-sakit">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                        </ul>
+                    </div>
+                </span>
+            </div>
+        </div>
+
+        <!-- search result -->
+        <div id="pencarian-keluhan" class="d-flex flex-column align-items-center" style="height: 0; flex-grow: 1; margin: auto; overflow: scroll;">
+            
+            <!-- result item(s)-->
+            <div id="daftar-keluhan" class="accordion" style="width: 100%;">
+                <div class="accordion-item card-design">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Accordion Item #1
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      hey
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function adjustSearchBar() {
+        if (window.outerWidth < 676) {
+            $('.search-bar').removeClass('justify-content-center');
+            $('.search-bar').addClass('justify-content-start');
+        }
+
+        if (window.outerWidth >= 676) {
+            $('.search-bar').removeClass('justify-content-start');
+            $('.search-bar').addClass('justify-content-center');
+        }
+    }
+
+    window.onresize = adjustSearchBar;
+    adjustSearchBar()
+</script>
+
+{% endblock content %}
