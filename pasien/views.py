@@ -99,15 +99,21 @@ def daftar_dokter(request):
 
 def cari_pengguna(request, id):
     try:
-        dokter = Dokter.objects.filter(pk=id)
-        nama_dokter = dokter[0].user.username
-    except Dokter.DoesNotExist:
-        nama_dokter = None
+        pasien = Pasien.objects.filter(pk=id)
+        nama_pengguna = pasien[0].user.username
+    except (IndexError, Pasien.DoesNotExist):
+        nama_pengguna = None
 
-    paket = {'nama_dokter': nama_dokter}
+    if nama_pengguna == None:
+        try:
+            dokter = Dokter.objects.filter(pk=id)
+            nama_pengguna = dokter[0].user.username
+        except (IndexError, Dokter.DoesNotExist):
+            nama_pengguna = None
+
+    paket = {"nama_pengguna": nama_pengguna}
 
     return JsonResponse(paket)
-
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def log_out(request):

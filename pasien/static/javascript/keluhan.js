@@ -132,15 +132,28 @@ function taruhDaftarKeluhan(data) {
   
   var counter = 0;
   data.forEach(keluhan => {
+    const namaPasien = cariPengguna(keluhan.fields.pasien)
+    const namaDokter = cariPengguna(keluhan.fields.dokter)
+
     const rincian_keluhan = `
     <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
       <h2 class="accordion-header" id="flush-heading${counter}">
         <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
-          Accordion Item #1
+          <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
+            <span>${keluhan.fields.tanggal}</span>
+            <span>${keluhan.fields.tema}</span>
+          </div>
         </button>
       </h2>
       <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+        <div class="accordion-body">
+          <div class="d-flex flex-column flex-gap" style="width: 100%; flex-flow: row wrap;">
+            <span style="margin-bottom: -16px;">dari (nama pasien): ${namaPasien}</span>
+            <span>kepada (nama dokter): ${namaDokter}</span>
+            <span style="margin-bottom: -16px;">keluhan:</span>
+            <span style="overflow: scroll;">&emsp;${keluhan.fields.deskripsi}</span>
+          </div>
+        </div>
       </div>
     </div>
     `;
@@ -151,17 +164,17 @@ function taruhDaftarKeluhan(data) {
 };
 
 function cariPengguna(idPengguna) {
-  var namaDokter;
+  var namaPengguna;
 
   $.ajax({
     type: "GET",
     url: `/pasien/cari-pengguna/${idPengguna}/`,
     async: false,
   }).done(function (data) {
-    namaDokter =  data.nama_dokter;
+    namaPengguna =  data.nama_pengguna;
   });
 
-  return namaDokter
+  return namaPengguna
 }
 
 function logOut() {
