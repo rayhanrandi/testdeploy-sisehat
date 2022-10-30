@@ -51,18 +51,17 @@
                 <span>Cari dokter berdasarkan nama</span>
 
                 <!-- text input -->
-                <span><input class="form-control" type="text" size="16"></span>
+                <span><input id="masukan-nama-dokter" class="form-control" type="text" size="16" onkeyup="masukanPengguna('masukan-nama-dokter')"></span>
 
                 <span>dan rumah sakit</span>
 
                 <!-- select option(s) -->
                 <span>
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="rumah-sakit-pilihan-atas" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                        <ul id="tarik-turun-rumah-sakit-atas" class="dropdown-menu">
                         </ul>
                     </div>
                 </span>
@@ -70,15 +69,7 @@
         </div>
 
         <!-- search result -->
-        <div id="pencarian-dokter" class="d-flex flex-column align-items-center" style="height: 0; flex-grow: 1; margin: auto; overflow: scroll;">
-            
-            <!-- result item(s)-->
-            <div class="card box-shadow card-design">
-                <div class="card-body">
-                    This is some text within a card body.
-                </div>
-            </div>
-
+        <div id="pencarian-dokter" class="d-flex flex-column align-items-center flex-gap" style="height: 0; flex-grow: 1; margin: auto; overflow: scroll;">
         </div>
 
     </div>
@@ -133,11 +124,10 @@
                 <!-- select option(s) -->
                 <span>
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="dokter-pilihan-atas" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                        <ul id="tarik-turun-dokter-atas" class="dropdown-menu">
                         </ul>
                     </div>
                 </span>
@@ -147,11 +137,10 @@
                 <!-- select option(s) -->
                 <span>
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="rumah-sakit-pilihan-tengah" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                        <ul id="tarik-turun-rumah-sakit-tengah" class="dropdown-menu">
                         </ul>
                     </div>
                 </span>
@@ -224,11 +213,10 @@
                 <!-- select option(s) -->
                 <span>
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="dokter-pilihan-bawah" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                        <ul id="tarik-turun-dokter-bawah" class="dropdown-menu">
                         </ul>
                     </div>
                 </span>
@@ -238,11 +226,10 @@
                 <!-- select option(s) -->
                 <span>
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="rumah-sakit-pilihan-bawah" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                        <ul id="tarik-turun-rumah-sakit-bawah" class="dropdown-menu">
                         </ul>
                     </div>
                 </span>
