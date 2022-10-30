@@ -234,10 +234,10 @@ function tampilkanDokter(himpunanDokter, nilai) {
 
   himpunanDokterSesuai.forEach(dokter => {
     const hasilPencarian = `
-      <div class="card hasil-pencarian box-shadow-v-2" style="width: 100%">
-        <div class="card-body d-flex flex-row flex-gap">
-          <span style="font-size: 18px;">${cariPengguna(dokter.pk)}</span>
-          <span style="font-size: 18px; margin-left: auto;">${dokter.fields.nama_rumah_sakit}</span>
+      <div class="card hasil-pencarian card-design box-shadow-v-2" style="width: 100%">
+        <div class="card-body d-flex flex-row flex-gap" style="flex-flow: row wrap;">
+          <span style="font-size: 18px; overflow: hidden">&#127973 ${dokter.fields.nama_rumah_sakit}</span>
+          <span style="font-size: 18px; margin-left: 60%; position: absolute;">&#128104/&#128105 ${cariPengguna(dokter.pk)}</span>
         </div>
       </div>
     `;
