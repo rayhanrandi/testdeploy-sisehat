@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -69,10 +68,8 @@ def mengeluh(request):
             # menyimpan keluhan
             keluhan.save()
 
-            messages.success(request, 'Keluhan Anda telah dikirim ke dokter yang Anda pilih!')
             return HttpResponseRedirect(reverse("pasien:keluhan"))
         else:
-            messages.info(request, 'Keluhan Anda gagal dikirim!')
             return HttpResponseRedirect(reverse("pasien:keluhan"))
     else:
         context = {"pasien":pasien, "rincian_keluhan":RincianKeluhan()}
@@ -112,6 +109,30 @@ def cari_pengguna(request, id):
             nama_pengguna = None
 
     paket = {"nama_pengguna": nama_pengguna}
+
+    return JsonResponse(paket)
+
+def cari_identitas(request, nama):
+    try:
+        pengguna = User.objects.filter(username=nama)[0]
+    except (IndexError, User.DoesNotExist):
+        pengguna = None
+
+    if pengguna != None:
+        try:
+            pasien = Pasien.objects.filter(user=pengguna)
+            identitas = pasien[0].pk
+        except (IndexError, Pasien.DoesNotExist):
+            identitas = None
+
+        if identitas == None:
+            try:
+                dokter = Dokter.objects.filter(user=pengguna)
+                identitas = dokter[0].pk
+            except (IndexError, Dokter.DoesNotExist):
+                identitas = None
+
+    paket = {"identitas": identitas}
 
     return JsonResponse(paket)
 

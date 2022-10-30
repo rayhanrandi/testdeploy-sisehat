@@ -67,6 +67,39 @@ body {
     background-image: linear-gradient(#fff5d4, #f6e8ba)
 }
 
+.accordion-button {
+    background-color: #fff5d4;
+    background-image: linear-gradient(#fff5d4, #fff5d4)
+}
+
+.accordion-button:hover {
+    background-color: #fff2c6;
+    background-image: linear-gradient(#fff2c6, #fff2c6)
+}
+
+.accordion-button:active {    
+    background-color: #faedc0;
+    background-image: linear-gradient(#faedc0, #faedc0)
+}
+
+.accordion-button:focus {
+    background-color: #faedc0;
+    background-image: linear-gradient(#faedc0, #faedc0)
+}
+
+.card-design {
+    width: 100%;
+    margin-bottom: 6px;
+    
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 20px;
+    border-color: #70706e;
+
+    background-color: #fdf5dc;
+    background-image: linear-gradient(#ffffff, #fdf5dc)
+}
+
 .round-button {
     display: inline-block;
     text-decoration: none;
