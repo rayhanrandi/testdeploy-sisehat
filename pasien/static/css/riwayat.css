@@ -40,7 +40,7 @@ body {
 
 .search-bar {flex-flow: row wrap;}
 
-.card-design {
+.card-design > .accordion-flush .accordion-item {
     width: 100%;
     margin-bottom: 6px;
     

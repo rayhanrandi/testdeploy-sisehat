@@ -20,6 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('halaman_utama.urls', 'halaman_utama'), namespace='halaman_utama')),
     path('registrasi/', include(('registrasi.urls', 'registrasi'), namespace='registrasi')),
-    path('pasien/', include('pasien.urls')),
+    path('pasien/', include(('pasien.urls', 'pasien'), namespace='pasien')),
     path('dokter/', include('dokter.urls')),
 ]

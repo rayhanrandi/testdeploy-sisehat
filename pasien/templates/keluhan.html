@@ -51,9 +51,11 @@
                             <form id="rincian-keluhan" method="POST" action="pasien/mengeluh/">
                                 {% csrf_token %}
                                 <div class="dropdown" style="margin: 4px; margin-bottom: 12px;">
-                                    <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span style="margin-right: 4px;">Nama Dokter:</span>
+                                    <button id="dokter-pilihan" class="btn btn-light dropdown-toggle" style="width: 180px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         berikut
                                     </button>
+                                    <input type="hidden" id="identitas-dokter" name="dokter" value="">
                                     <ul class="dropdown-menu tarik-turun-dokter">
                                         <li><a class="dropdown-item" href="#">Action</a></li>
                                     </ul>
@@ -95,7 +97,7 @@
                 <!-- select option(s) -->
                 <span>
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="rumah-sakit-pilihan" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
                         </button>
                         <ul class="dropdown-menu tarik-turun-rumah-sakit">
@@ -110,19 +112,7 @@
         <div id="pencarian-keluhan" class="d-flex flex-column align-items-center" style="height: 0; flex-grow: 1; margin: auto; overflow: scroll;">
             
             <!-- result item(s)-->
-            <div id="daftar-keluhan" class="accordion" style="width: 100%;">
-                <div class="accordion-item card-design">
-                  <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Accordion Item #1
-                    </button>
-                  </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      hey
-                    </div>
-                  </div>
-                </div>
+            <div id="accordionFlushExample" class="accordion accordion-flush" style="width: 100%;">
             </div>
 
         </div>

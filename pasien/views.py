@@ -1,11 +1,10 @@
-import imp
-from urllib import response
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core import serializers
-from django.http import HttpResponseRedirect
-from django.shortcuts import HttpResponse, redirect, render
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import HttpResponse, render
 from django.urls import reverse
 
 from pasien.forms import RincianKeluhan
@@ -39,29 +38,44 @@ def mengeluh(request):
         pasien = None
 
     if request.method == "POST" and RincianKeluhan(request.POST).is_valid():
-        dokter = request.POST.get("dokter")
+        nama_dokter = request.POST.get("dokter")
+
+        try:
+            user = User.objects.filter(username=nama_dokter)
+        except User.DoesNotExist:
+            user = None
+
+        if user != None:
+            try:
+                dokter = Dokter.objects.filter(user=user[0])
+            except Dokter.DoesNotExist:
+                dokter = None
 
         tanggal = request.POST.get("tanggal")
         tema = request.POST.get("tema")
         deskripsi = request.POST.get("deskripsi")
 
-        # membuat keluhan
-        keluhan = Keluhan.objects.create(
-            pasien=pasien,
-            dokter=dokter,
+        if user != None and dokter != None:
+            # membuat keluhan
+            keluhan = Keluhan.objects.create(
+                pasien=pasien,
+                dokter=dokter[0],
 
-            tanggal=tanggal,
-            tema=tema,
-            deskripsi=deskripsi
-        )
+                tanggal=tanggal,
+                tema=tema,
+                deskripsi=deskripsi
+            )
 
-        # menyimpan keluhan
-        keluhan.save()
+            # menyimpan keluhan
+            keluhan.save()
 
-        messages.success(request, 'Keluhan Anda telah dikirim ke dokter yang Anda dipilih!')
-        return redirect('pasien:keluhan')
+            messages.success(request, 'Keluhan Anda telah dikirim ke dokter yang Anda pilih!')
+            return HttpResponseRedirect(reverse("pasien:keluhan"))
+        else:
+            messages.info(request, 'Keluhan Anda gagal dikirim!')
+            return HttpResponseRedirect(reverse("pasien:keluhan"))
     else:
-        context = {'pasien':pasien, 'rincian_keluhan':RincianKeluhan()}
+        context = {"pasien":pasien, "rincian_keluhan":RincianKeluhan()}
         return render(request, "keluhan.html", context)
 
 @login_required(login_url='/registrasi/halaman-masuk/')
@@ -83,8 +97,17 @@ def daftar_dokter(request):
     
     return HttpResponse(serializers.serialize("json", dokter), content_type="application/json")
 
-def cari_pengguna(request):
-    pass
+def cari_pengguna(request, id):
+    try:
+        dokter = Dokter.objects.filter(pk=id)
+        nama_dokter = dokter[0].user.username
+    except Dokter.DoesNotExist:
+        nama_dokter = None
+
+    paket = {'nama_dokter': nama_dokter}
+
+    return JsonResponse(paket)
+
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def log_out(request):

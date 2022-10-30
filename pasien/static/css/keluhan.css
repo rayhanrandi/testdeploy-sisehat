@@ -42,17 +42,22 @@ body {
 
 .accordion-button {
     background-color: #fff5d4;
-    background-image: linear-gradient(#fdf5dc, #fff5d4)
+    background-image: linear-gradient(#fff5d4, #fff5d4)
 }
 
 .accordion-button:hover {
     background-color: #fff2c6;
-    background-image: linear-gradient(#fdf5dc, #fff2c6)
+    background-image: linear-gradient(#fff2c6, #fff2c6)
 }
 
 .accordion-button:active {    
-    background-color: #ffefb4;
-    background-image: linear-gradient(#fdf5dc, #ffefb4)
+    background-color: #faedc0;
+    background-image: linear-gradient(#faedc0, #faedc0)
+}
+
+.accordion-button:focus {
+    background-color: #faedc0;
+    background-image: linear-gradient(#faedc0, #faedc0)
 }
 
 .card-design {

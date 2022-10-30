@@ -19,16 +19,18 @@ function isiTarikTurunDokter(data) {
   const himpunanDokter = new Set();
 
   data.forEach(dokter => {
-    const nomorIndukKependudukan = dokter.pk;
-    himpunanDokter.add(nomorIndukKependudukan);
+    const namaDokter = cariPengguna(dokter.pk)
+    himpunanDokter.add(namaDokter);
   })
 
-  himpunanDokter.forEach(nomorIndukKependudukan => {
-    const identitasDokter = `
-    <li><a class="dropdown-item">${nomorIndukKependudukan}</a></li>  
+  var counter = 0;
+  himpunanDokter.forEach(namaDokter => {
+    const pilihDokter = `
+    <li><a id="id-dokter-${counter}" class="dropdown-item" onclick="gantiDokterTerpilih('id-dokter-${counter}')">${namaDokter}</a></li>  
     `;
 
-    tarikTurunDokter.append(identitasDokter);
+    counter += 1;
+    tarikTurunDokter.append(pilihDokter);
   })
 }
 
@@ -43,12 +45,20 @@ function isiTarikTurunRumahSakit(data) {
     himpunanRumahSakit.add(namaRumahSakit);
   })
 
-  himpunanRumahSakit.forEach(namaRumahSakit => {
-    const rumahSakit = `
-    <li><a class="dropdown-item">${namaRumahSakit}</a></li>  
+  const daftarRumahSakit = `
+    <li><a id="id-rumah-sakit-kosong" class="dropdown-item" onclick="gantiRumahSakitTerpilih('id-rumah-sakit-kosong')">—</a></li>  
     `;
 
-    tarikTurunRumahSakit.append(rumahSakit);
+  tarikTurunRumahSakit.append(daftarRumahSakit);
+
+  var counter = 0;
+  himpunanRumahSakit.forEach(namaRumahSakit => {
+    const pilihRumahSakit = `
+    <li><a id="id-rumah-sakit-${counter}" class="dropdown-item" onclick="gantiRumahSakitTerpilih('id-rumah-sakit-${counter}')">${namaRumahSakit}</a></li>  
+    `;
+
+    counter += 1;
+    tarikTurunRumahSakit.append(pilihRumahSakit);
   })
 }
 
@@ -77,9 +87,21 @@ function ambilDaftarDokter() {
   });
 }
 
+function gantiDokterTerpilih(idDokter) {
+  let dokterPilihan = document.getElementById(idDokter).innerHTML;
+  document.getElementById("dokter-pilihan").innerHTML = dokterPilihan;
+}
+
+function gantiRumahSakitTerpilih(idRumahSakit) {
+  let rumahSakitPilihan = document.getElementById(idRumahSakit).innerHTML;
+  document.getElementById("rumah-sakit-pilihan").innerHTML = rumahSakitPilihan;
+}
+
 function bikinKeluhan() {
+  let dokterPilihan = document.getElementById("dokter-pilihan").innerHTML;
+  document.getElementById("identitas-dokter").setAttribute("value", dokterPilihan); 
+
   const rincian_keluhan = $("#rincian-keluhan");
-  
   $.ajax({
     type: "POST",
     url: "/pasien/mengeluh/",
@@ -92,7 +114,7 @@ function bikinKeluhan() {
     ambilDaftarKeluhan();
   });
 
-  $("#rincian-keluhan").modal("hide");
+  $("#staticBackdrop").modal("hide");
 }
 
 function ambilDaftarKeluhan() {
@@ -105,19 +127,42 @@ function ambilDaftarKeluhan() {
 }
 
 function taruhDaftarKeluhan(data) {
-  const daftar_keluhan = $('#daftar-keluhan');
+  const daftar_keluhan = $('#accordionFlushExample');
   daftar_keluhan.empty();
-
+  
+  var counter = 0;
   data.forEach(keluhan => {
-      
-      const rincian_keluhan = `
-        <p>hey</p>    
-      `;
-      
-      daftar_keluhan.append(rincian_keluhan);
-
+    const rincian_keluhan = `
+    <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
+      <h2 class="accordion-header" id="flush-heading${counter}">
+        <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
+          Accordion Item #1
+        </button>
+      </h2>
+      <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+      </div>
+    </div>
+    `;
+    
+    counter += 1;
+    daftar_keluhan.append(rincian_keluhan);
   })
 };
+
+function cariPengguna(idPengguna) {
+  var namaDokter;
+
+  $.ajax({
+    type: "GET",
+    url: `/pasien/cari-pengguna/${idPengguna}/`,
+    async: false,
+  }).done(function (data) {
+    namaDokter =  data.nama_dokter;
+  });
+
+  return namaDokter
+}
 
 function logOut() {
   $.ajax({
