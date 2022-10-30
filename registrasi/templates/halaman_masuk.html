@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block meta %}
-<title>Feedback</title>
+<title>SiSehat - Login</title>
 {% endblock meta %}
 
 
@@ -11,67 +11,217 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
 <style>
-  .card:hover{
-    transform: scale(1.08);
+  /* team card */
+  .cardDua {
+    width: 240px;
+    height: 310px;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: .5s;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+
   }
-  #feedback{
-    background-color: #EAE0CC;
+
+  .card-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    transition: .5s;
+    overflow: hidden;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
-  #judul{
-    color: #4D6A6D;
-    font-weight: 400;
-    font-size: 70px;
-    padding-bottom: 10%;
+
+  .card-image img {
+    display: block;
+    width: 100%;
   }
+
+  .social-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .5s;
+    display: flex;
+    z-index: 3;
+  }
+
+  .social-icons li {
+    list-style-type: none;
+  }
+
+  .social-icons li a {
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    background: #EAE0CC;
+    text-align: center;
+    font-size: 24px;
+    color: #A0A083;
+    margin: 0 5px;
+    transition: .5s;
+    transform: translateY(200px);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .detail {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #4D6A6D;
+    width: 100%;
+    height: 120px;
+    z-index: 1;
+    padding: 20px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .detail h2 {
+    margin: 0;
+    color: #A0A083;
+    font-size: 24px;
+  }
+
+  .jurusan {
+    font-size: 1rem;
+    line-height: 2.5rem;
+    color: #A0A083;
+    font-weight: 300;
+  }
+
+  .cardDua:hover img {
+    opacity: .4;
+    transition: .5s;
+  }
+
+  .cardDua:hover li a {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cardDua:hover li:nth-child(1) a {
+    transition-delay: .1s;
+  }
+
+  .cardDua:hover li:nth-child(2) a {
+    transition-delay: .2s;
+  }
+
+  .cardDua:hover li:nth-child(3) a {
+    transition-delay: .3s;
+  }
+
+  .cardDua:hover li:nth-child(4) a {
+    transition-delay: .4s;
+  }
+
+  .cardDua:hover .card-image {
+    transform: translateY(-120px);
+    transition: .5s;
+  }
+  #headjudul{
+    font-weight: 800;
+    font-size: 50;
+  }
+
 </style>
  
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tahoma">
+  <!--CSS LandingPage-->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="icon" src="{%static 'images/logo.png' %}" type="image/icon type">
+  <title >SiSehat</title>
+
+</head>
 <!-- Navbar -->
+<body>
+  <nav class="navbar navbar-expand-lg ">
+    <div class="container">
+      <div class="container-fluid d-flex align-items-center justify-content-between w-full">
+        <a class="navbar-brand" href="/#main/"><img src="{%static 'images/logo.png' %}" alt="img" style="max-width: 90px; max-height: 90px; padding: left -20px; "></img> SiSehat</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link " aria-current="page" href="/#main/">Home</a>
+            <a class="nav-link" href="/#about/">About</a>
+            <a class="nav-link" href="/#services/">Layanan</a>
+            <a class="nav-link " href="/#feedback/">Feedback</a>
 
-<nav class="navbar navbar-expand-lg ">
-  <div class="container">
-    <div class="container-fluid d-flex align-items-center justify-content-between w-full">
-      <a class="navbar-brand" href="/#main/"><img src="{%static 'images/logo.png' %}" alt="img" style="max-width: 90px; max-height: 90px; padding: left -20px; "></img> SiSehat</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link " aria-current="page" href="/#main/">Home</a>
-          <a class="nav-link" href="/#about/">About</a>
-          <a class="nav-link" href="/#services/">Layanan</a>
-          <a class="nav-link " href="/#feedback/">Feedback</a>
+            {% if user.is_authenticated %}
+            <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{
+              user.get_username }}</li>
+            <li class="scroll-to-section">
+              <div class="border-first-button"><a href="#">Logout</a></div>
+            </li>
+            {% else %}
+            <a class="nav-link btn " id="btnLogin">Login</a>
+            <!-- <li class="scroll-to-section"><div class="border-first-button"><a href="/authentication/login">Login</a></div></li>  -->
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- akhir Navbar -->
 
-          {% if user.is_authenticated %}
-          <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{
-            user.get_username }}</li>
-          <li class="scroll-to-section">
-            <div class="border-first-button"><a href="#">Logout</a></div>
-          </li>
-          {% else %}
-          <a class="nav-link btn " id="btnLogin">Login</a>
-          <!-- <li class="scroll-to-section"><div class="border-first-button"><a href="/authentication/login">Login</a></div></li>  -->
-          {% endif %}
+  <div id="main" class="main-banner">
+    <div class="card-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-6 align-self-center">
+                <div class="left-content show-up header-text wow fadeInLeft">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <h6>LOG IN!</h6>
+                      <h7>Select below the type of account you want to login</h7>
+                      <br>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="border-first-button scroll-to-section">
+                        <a  style="border-radius: 16px; font-family: 'Tahoma'; margin-top: 20px; background-color: #E8E0CE;" class="btn btn-primary btn-lg button-feedback" href="/registrasi/pasien-masuk/">I'm a Patient</a>
+                        <a  style="border-radius: 16px; font-family: 'Tahoma'; margin-top: 20px; background-color: #E8E0CE;" class="btn btn-primary btn-lg button-feedback" href="/registrasi/dokter-masuk/">I'm a Doctor</a>
+                      </div>
+                      <br>
+                      <a>Don't have an account? <a href="/registrasi/halaman-registrasi/">Sign Up</a></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="right-image wow fadeInRight">
+                  <img src="{%static 'images/dokter.png' %}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</nav>
-<!-- akhir Navbar -->
-
-<div class="container px-4 px-lg-5 text-center">
-    <div class="col-lg-12">
-        <div class="section-heading  wow fadeInDown" >
-            <br>
-          <h6 style="display: flex; flex-wrap:wrap; gap: 50px;justify-content: center;" id="judul">LOG IN!</h6>
-        </div>
-    </div>      
-    <h3 class="mb-5"><em>Select below the type of account you want to login</em></h3>
-    <a  style="border-radius: 16px; font-family: 'Tahoma'; margin-top: 20px; background-color: #4d6a6d;" class="btn btn-primary btn-lg button-feedback" href="/registrasi/pasien-masuk/">I'm a Patient</a>
-    <a  style="border-radius: 16px; font-family: 'Tahoma'; margin-top: 20px; background-color: #4d6a6d;" class="btn btn-primary btn-lg button-feedback" href="/registrasi/dokter-masuk/">I'm a Doctor</a>
-    <br>
-    <br>
-    <a>Don't have an account? <a href="/registrasi/halaman-registrasi/">Sign Up</a></a>
-</div>
+</body>
 
 {% endblock content %}
