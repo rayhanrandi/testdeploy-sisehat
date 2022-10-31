@@ -46,7 +46,8 @@ def add_penyakit(request, pasien):
     if request.method == 'POST':
         if form.is_valid():
             penyakit = form.save(commit=False)
-            penyakit.user = Pasien.objects.get(nomor_induk_kependudukan=pasien)
+            penyakit.pasien = Pasien.objects.get(nomor_induk_kependudukan=pasien)
+            penyakit.dokter = Dokter.objects.get(user=request.user)
             penyakit.save()
             return show_penyakit(request)
 

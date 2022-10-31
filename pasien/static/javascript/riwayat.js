@@ -12,7 +12,8 @@ $(document).ready(() => {
   const hanyaCariDokter = false
   ambilDaftarDokter(hanyaCariDokter);
 
-  if (getCookie("user_type") === "pasien") ambilRiwayatPenyakit();
+  if (getCookie("user_type") == "pasien") ambilRiwayatPenyakit();
+  if (getCookie("user_type") == "dokter") riwayatPenyakitPasien();
 })
 
 function homepage() {
@@ -134,7 +135,6 @@ function ambilDaftarDokter(hanyaCariDokter, nilai="") {
       isiTarikTurunRumahSakitBawah(himpunanDokter);
       
       if (getCookie("username") == "pasien") isiTarikTurunDokter(himpunanDokter);
-      else console.log("..");
     }
   });
 }
@@ -230,6 +230,47 @@ function tampilkanRiwayatPenyakit(data) {
           <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
             <span>${penyakit.fields.tanggal_diagnosis}</span>
             <span>Diagnosis: ${penyakit.fields.nama_penyakit}</span>
+          </div>
+        </button>
+      </h2>
+      <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#daftar-riwayat-penyakit">
+        <div class="accordion-body">
+          <div class="d-flex flex-column flex-gap align-items-start" style="width: 100%; flex-flow: row wrap;">
+            <span style="margin-bottom: -16px;">deskripsi:</span>
+            <span style="overflow: scroll;">&emsp;${penyakit.fields.deskripsi_keluhan}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+
+    counter += 1;
+    daftarRiwayatPenyakit.append(rincian_penyakit);
+  })
+}
+
+function riwayatPenyakitPasien() {
+  $.ajax({
+    type: "GET",
+    url: `/pasien/riwayat-penyakit-pasien/dokter-${getCookie("username")}/`,
+  }).done(function (data) {
+    tampilkanRiwayatPenyakitPasien(data);
+  });
+}
+
+function tampilkanRiwayatPenyakitPasien(data) {
+  const daftarRiwayatPenyakit = $("#daftar-riwayat-penyakit");
+  
+  var counter = 0;
+  data.forEach(penyakit => {
+    const rincian_penyakit = `
+    <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
+      <h2 class="accordion-header" id="flush-heading${counter}">
+        <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
+          <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
+            <span>${penyakit.fields.tanggal_diagnosis}</span>
+            <span>Diagnosis: ${penyakit.fields.nama_penyakit}</span>
+            <span style="margin-left: 60%; position: absolute;">Pasien: ${cariPengguna(penyakit.fields.pasien)}</span>
           </div>
         </button>
       </h2>

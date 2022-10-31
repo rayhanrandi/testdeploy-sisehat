@@ -5,6 +5,7 @@ from django.core import serializers
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import HttpResponse, render
 from django.urls import reverse
+from dokter.models import Penyakit
 
 from pasien.forms import RincianKeluhan
 from pasien.models import Keluhan
@@ -109,6 +110,24 @@ def daftar_dokter(request):
         dokter = None
     
     return HttpResponse(serializers.serialize("json", dokter), content_type="application/json")
+
+def riwayat_penyakit_pasien(request, nama):
+    try:
+        pengguna = User.objects.filter(username=nama)[0]
+    except (IndexError, User.DoesNotExist):
+        pengguna = None
+
+    try:
+        dokter = Dokter.objects.filter(user=pengguna)[0]
+    except (IndexError, NameError, Dokter.DoesNotExist):
+        dokter = None
+    
+    try:
+        riwayat_penyakit = Penyakit.objects.filter(dokter=dokter)
+    except (IndexError, NameError, Penyakit.DoesNotExist):
+        riwayat_penyakit = None
+    
+    return HttpResponse(serializers.serialize("json", riwayat_penyakit), content_type="application/json")
 
 def cari_pengguna(request, id):
     try:
