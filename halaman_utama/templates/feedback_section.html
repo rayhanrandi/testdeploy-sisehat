@@ -9,8 +9,14 @@
 {% block content %}
 <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tahoma">
 
 <style>
+  .content {
+    font-family: Tahoma, sans-serif;
+    font-weight: bolder;
+  }
+
   .card:hover{
     transform: scale(1.08);
   }
@@ -26,63 +32,65 @@
 </style>
  
 <!-- Navbar -->
+<div class="content">
 
-<nav class="navbar navbar-expand-lg ">
-  <div class="container">
-    <div class="container-fluid d-flex align-items-center justify-content-between w-full">
-      <a class="navbar-brand" href="/#main/"><img src="{%static 'images/logo.png' %}" alt="img" style="max-width: 90px; max-height: 90px; padding: left -20px; "></img> SiSehat</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link " aria-current="page" href="/">Home</a>
-          <a class="nav-link" href="/">About</a>
-          <a class="nav-link" href="/">Layanan</a>
-          <a class="nav-link " href="/">Feedback</a>
-
-          {% if user.is_authenticated %}
-          <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{
-            user.get_username }}</li>
-          <li class="scroll-to-section">
-            <div class="border-first-button"><a href="#">Logout</a></div>
-          </li>
-          {% else %}
-          <a class="nav-link btn " id="btnLogin">Login</a>
-          <!-- <li class="scroll-to-section"><div class="border-first-button"><a href="/authentication/login">Login</a></div></li>  -->
-          {% endif %}
+  <nav class="navbar navbar-expand-lg ">
+    <div class="container">
+      <div class="container-fluid d-flex align-items-center justify-content-between w-full">
+        <a class="navbar-brand" href="{% url 'halaman_utama:landing_page' %}"><img src="{%static 'images/logo.png' %}" alt="img" style="max-width: 90px; max-height: 90px; padding: left -20px; "></img> SiSehat</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <!-- <a class="nav-link" id="idNavbar" aria-current="page" href="#main">Home</a> -->
+            <!-- <a class="nav-link" id="idNavbar" href="#about">About Us</a>
+            <a class="nav-link" id="idNavbar" href="#services">Features</a>
+            <a class="nav-link " id="idNavbar" href="#feedback">Feedback</a> -->
+  
+            {% if user.is_authenticated %}
+            <li style="font-weight:bolder; color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{ request.user }}</li>
+            <li class="scroll-to-section">
+              <div class="border-first-button"><a href="{% url 'registrasi:logout' %}">Logout</a></div>
+            </li>
+            {% else %}
+            <a class="nav-link btn " id="btnLogin" href="/registrasi/halaman-masuk/">Login</a>
+            <li class="scroll-to-section"><div class="border-first-button"><a href="#">Login</a></div></li> 
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</nav>
-<!-- akhir Navbar -->
+  </nav>
+  <!-- akhir Navbar -->
+  
+  <div id="feedback" class="services section" style="min-height: 100vh;">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="section-heading  wow fadeInDown" >
+                    <h6 style="display: flex; flex-wrap:wrap; gap: 50px;justify-content: center;" id="judul">FEEDBACK APP!</h6>
+                      <br>
+                  </div>
+              </div>                  
+              <div class="container">
+                  <div class="card-container">
+                      {% for i in feedback %}
+                      <div style="border-radius: 20px;background-color:#798478; box-shadow: 7px 7px 10px 2px #4D6A6D; margin-bottom: 52px;" class="card">
+                          <h6 style="text-align: center; color: #bbbbbb; padding-top: 16px;">Nama:</h6>
+                          <h3 style="text-align: center; color: #fff; font-size: medium; word-break: break-all; padding-top: 4px;">{{ i.name }}</h3>
+                          <br>
+                          <h6 style="text-align: center; color: #bbbbbb; padding-top: 16px;">Message:</h6>
+                          <p style="text-align: center; color: #fff; font-size: medium; word-break: break-all; padding-top: 4px; padding-bottom: 16px;">{{ i.message }}</p>
+                      </div>
+                      {% endfor %}
+                  </div>
+              </div>
+          </div> 
+      </div>
+  </div>  
 
-<div id="feedback" class="services section" style="min-height: 100vh;">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading  wow fadeInDown" >
-                  <h6 style="display: flex; flex-wrap:wrap; gap: 50px;justify-content: center;" id="judul">FEEDBACK APP!</h6>
-                    <br>
-                </div>
-            </div>                  
-            <div class="container">
-                <div class="card-container">
-                    {% for i in feedback %}
-                    <div style="border-radius: 20px;background-color:#798478; box-shadow: 7px 7px 10px 2px #4D6A6D; margin-bottom: 52px;" class="card">
-                        <h6 style="text-align: center; color: #bbbbbb; padding-top: 16px;">Nama:</h6>
-                        <h3 style="text-align: center; color: #fff; font-size: medium; word-break: break-all; padding-top: 4px;">{{ i.name }}</h3>
-                        <br>
-                        <h6 style="text-align: center; color: #bbbbbb; padding-top: 16px;">Message:</h6>
-                        <p style="text-align: center; color: #fff; font-size: medium; word-break: break-all; padding-top: 4px; padding-bottom: 16px;">{{ i.message }}</p>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div> 
-    </div>
-</div>  
+</div>
 
 {% endblock content %}

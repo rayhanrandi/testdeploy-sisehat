@@ -5,29 +5,29 @@ from django.core import serializers
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import HttpResponse, render
 from django.urls import reverse
+from dokter.models import Penyakit
 
 from pasien.forms import RincianKeluhan
 from pasien.models import Keluhan
 from registrasi.models import Dokter, Pasien
 
-def riwayat(request):
-    try:
-        dokter = Dokter.objects.get(user=request.user)
-    except (TypeError, Dokter.DoesNotExist):
-        dokter = None
+def menentukanTipePengguna(request):
+    if request.COOKIES.get("user_type") == "pasien":
+        pasien = True
+        dokter = False
 
-    context = {'dokter':dokter}
-    return render(request, "riwayat.html", context)
+    if request.COOKIES.get("user_type") == "dokter":
+        pasien = False
+        dokter = True
+
+    return {'pasien':pasien, 'dokter':dokter}
+
+def riwayat(request):
+    return render(request, "riwayat.html", menentukanTipePengguna(request))
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def keluhan(request):
-    try:
-        pasien = Pasien.objects.get(user=request.user)
-    except Pasien.DoesNotExist:
-        pasien = None
-
-    context = {'pasien':pasien, 'rincian_keluhan':RincianKeluhan()}
-    return render(request, "keluhan.html", context)
+    return render(request, "keluhan.html", menentukanTipePengguna(request))
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def mengeluh(request):
@@ -76,15 +76,32 @@ def mengeluh(request):
         return render(request, "keluhan.html", context)
 
 @login_required(login_url='/registrasi/halaman-masuk/')
-def daftar_keluhan(request):
-    try:
-        pasien = Pasien.objects.get(user=request.user)
-    except Pasien.DoesNotExist:
-        pasien = None
-        
-    daftar_keluhan = Keluhan.objects.filter(pasien=pasien)
+def daftar_keluhan(request, nilai):
+    if nilai == "kosong":
+        nilai = ""
+
+    if request.COOKIES.get("user_type") == "pasien":
+        try:
+            pasien = Pasien.objects.get(user=request.user)
+        except Pasien.DoesNotExist:
+            pasien = None
+            
+        daftar_keluhan = Keluhan.objects.filter(pasien=pasien)
+
+    if request.COOKIES.get("user_type") == "dokter":
+        try:
+            dokter = Dokter.objects.get(user=request.user)
+        except Dokter.DoesNotExist:
+            dokter = None
+            
+        daftar_keluhan = Keluhan.objects.filter(dokter=dokter)
+
+    daftar_keluhan_terpilih = set()
+    for keluhan in daftar_keluhan:
+        if nilai.lower().strip() in keluhan.tema.lower().strip():
+            daftar_keluhan_terpilih.add(keluhan)
     
-    return HttpResponse(serializers.serialize("json", daftar_keluhan), content_type="application/json")
+    return HttpResponse(serializers.serialize("json", daftar_keluhan_terpilih), content_type="application/json")
 
 def daftar_dokter(request):
     try:
@@ -93,6 +110,24 @@ def daftar_dokter(request):
         dokter = None
     
     return HttpResponse(serializers.serialize("json", dokter), content_type="application/json")
+
+def riwayat_penyakit_pasien(request, nama):
+    try:
+        pengguna = User.objects.filter(username=nama)[0]
+    except (IndexError, User.DoesNotExist):
+        pengguna = None
+
+    try:
+        dokter = Dokter.objects.filter(user=pengguna)[0]
+    except (IndexError, NameError, Dokter.DoesNotExist):
+        dokter = None
+    
+    try:
+        riwayat_penyakit = Penyakit.objects.filter(dokter=dokter)
+    except (IndexError, NameError, Penyakit.DoesNotExist):
+        riwayat_penyakit = None
+    
+    return HttpResponse(serializers.serialize("json", riwayat_penyakit), content_type="application/json")
 
 def cari_pengguna(request, id):
     try:
@@ -138,10 +173,11 @@ def cari_identitas(request, nama):
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def log_out(request):
-    logout(request)
+    response = HttpResponseRedirect('/registrasi/halaman-masuk/')
 
-    response = HttpResponseRedirect(reverse('halaman_utama:index'))
     response.delete_cookie('username')
+    response.delete_cookie('user_type')
     response.delete_cookie('last_login')
-    
+
+    logout(request)
     return response

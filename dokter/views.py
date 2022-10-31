@@ -21,7 +21,6 @@ from django.urls import reverse
 
 # Create your views here.
 
-
 @login_required(login_url='/registrasi/halaman-masuk/')
 def show_penyakit(request):
     if request.COOKIES.get('user_type') == 'dokter':
@@ -41,7 +40,7 @@ def show_penyakit(request):
 def get_penyakit_pasien(request, pasien):
     if request.COOKIES.get('user_type') == 'dokter':
         pasien = Pasien.objects.get(nomor_induk_kependudukan=pasien)
-        data_penyakit = serializers.serialize("json", Penyakit.objects.filter(user=pasien))
+        data_penyakit = serializers.serialize("json", Penyakit.objects.filter(pasien=pasien))
         return HttpResponse(data_penyakit, content_type="application/json")
     else:
         return redirect('registrasi:halaman_registrasi')

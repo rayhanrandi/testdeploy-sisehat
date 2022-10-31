@@ -166,7 +166,7 @@
             <a class="nav-link " id="idNavbar" href="#feedback">Feedback</a>
 
             {% if user.is_authenticated %}
-            <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{ request.user }}</li>
+            <li style="font-weight: bolder; color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{ request.user }}</li>
             <li class="scroll-to-section">
               <div class="border-first-button"><a href="{% url 'registrasi:logout' %}">Logout</a></div>
             </li>
@@ -298,7 +298,7 @@
               <br>
               <p>Tambah Keluhan adalah salah satu fitur untuk menambahkan keluhan yang dialamai sebelum berobat, agar memudahkan dokter untuk mendiagnosa terlebih dahulu.</p>
               <br>
-              <a href="/food-schedule">
+              <a href="{% url 'pasien:riwayat' %}">
                 <button style="border-radius: 20px; font-family: 'Tahoma'; background-color: #4d6a6d; width: 100%;" type="button"
                   class="btn btn-primary btn-lg">Lihat Disini</button>
               </a>
@@ -362,7 +362,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="https://twitter.com/rayhanrandi">
               <i class='bx bxl-twitter'></i>
             </a>
           </li>
@@ -389,7 +389,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="https://www.twitter.com/rayhanrandi">
               <i class='bx bxl-twitter'></i>
             </a>
           </li>
@@ -416,7 +416,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="https://twitter.com/eanndut">
               <i class='bx bxl-twitter'></i>
             </a>
           </li>
@@ -443,7 +443,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="https://twitter.com/rayhanrandi">
               <i class='bx bxl-twitter'></i>
             </a>
           </li>
