@@ -15,7 +15,11 @@
 <div class="p-2 d-flex flex-column" style="height: 100vh;">
 
     <!-- container body -->
+    {% if pasien %}
     <div class="d-flex flex-column flex-gap" style="height: 84%;">
+    {% else %}
+    <div class="d-flex flex-column flex-gap" style="height: 100%;">
+    {% endif %}
 
         <!-- set of buttons -->
         <div class="d-flex flex-row flex-gap set-of-buttons">
@@ -29,7 +33,7 @@
             <!-- return button -->
             <div style="margin: auto;">
                 <button type="button" class="btn btn-primary box-shadow rectangular-button" style="width: 160px;" onclick="bikinKeluhan()">
-                    {% if dokter is not None %}
+                    {% if dokter is not False %}
                     Lihat Keluhan
                     {% else %}
                     Bikin Keluhan
@@ -74,7 +78,7 @@
 
     </div>
 
-    {% if request.user.is_authenticated and dokter is None %} 
+    {% if request.user.is_authenticated and dokter is False %} 
     <!-- container footer -->
     <div class="d-flex flex-column" style="height: 16%;">
 
@@ -92,7 +96,7 @@
 
 </div>
 
-{% if request.user.is_authenticated and dokter is None %}
+{% if request.user.is_authenticated and dokter is False %}
 <!-- screen-wide container -->
 <div id="riwayat-penyakit" class="d-flex flex-column" style="height: 100vh;">
 
@@ -185,10 +189,10 @@
                 <!-- select option(s) -->
                 <span>
                     <div class="dropdown">
-                        <button id="dokter-pilihan-bawah" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="dokter-pilihan" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             berikut
                         </button>
-                        <ul id="tarik-turun-dokter-bawah" class="dropdown-menu">
+                        <ul id="tarik-turun-dokter" class="dropdown-menu">
                         </ul>
                     </div>
                 </span>

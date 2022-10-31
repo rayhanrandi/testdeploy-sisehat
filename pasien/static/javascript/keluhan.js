@@ -1,3 +1,9 @@
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 $(document).ready(() => {
   ambilDaftarKeluhan();
   ambilDaftarDokter();
@@ -117,10 +123,17 @@ function bikinKeluhan() {
   $("#staticBackdrop").modal("hide");
 }
 
-function ambilDaftarKeluhan() {
+async function masukanPengguna(data) {
+  var nilai = await document.getElementById(data).value;
+
+  if (nilai == "") nilai = "kosong"
+  setTimeout(ambilDaftarKeluhan(nilai), 200);
+}
+
+function ambilDaftarKeluhan(nilai="kosong") {
   $.ajax({
     type: "GET",
-    url: "/pasien/daftar-keluhan/"
+    url: "/pasien/daftar-keluhan/" + nilai + "/"
   }).done((data) => {
     taruhDaftarKeluhan(data)
   });
@@ -130,36 +143,64 @@ function taruhDaftarKeluhan(data) {
   const daftar_keluhan = $('#accordionFlushExample');
   daftar_keluhan.empty();
   
+  const tipePengguna = getCookie("user_type")
   var counter = 0;
+  
   data.forEach(keluhan => {
     const namaPasien = cariPengguna(keluhan.fields.pasien)
     const namaDokter = cariPengguna(keluhan.fields.dokter)
 
-    const rincian_keluhan = `
-    <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
-      <h2 class="accordion-header" id="flush-heading${counter}">
-        <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
-          <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
-            <span>${keluhan.fields.tanggal}</span>
-            <span>${keluhan.fields.tema}</span>
-          </div>
-        </button>
-      </h2>
-      <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <div class="accordion-body">
-          <div class="d-flex flex-column flex-gap" style="width: 100%; flex-flow: row wrap;">
-            <span style="margin-bottom: -16px;">dari (nama pasien): ${namaPasien}</span>
-            <span>kepada (nama dokter): ${namaDokter}</span>
-            <span style="margin-bottom: -16px;">keluhan:</span>
-            <span style="overflow: scroll;">&emsp;${keluhan.fields.deskripsi}</span>
+    if (tipePengguna == "pasien") {
+      const rincian_keluhan = `
+      <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
+        <h2 class="accordion-header" id="flush-heading${counter}">
+          <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
+            <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
+              <span>${keluhan.fields.tanggal}</span>
+              <span>${keluhan.fields.tema}</span>
+              <span style="margin-left: auto; margin-right: 20px;">kepada: ${namaDokter}</span>
+            </div>
+          </button>
+        </h2>
+        <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <div class="d-flex flex-column flex-gap" style="width: 100%; flex-flow: row wrap;">
+              <span style="margin-bottom: -16px;">keluhan:</span>
+              <span style="overflow: scroll;">&emsp;${keluhan.fields.deskripsi}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    `;
-    
-    counter += 1;
-    daftar_keluhan.append(rincian_keluhan);
+      `;
+
+      counter += 1;
+      daftar_keluhan.append(rincian_keluhan);
+    } else {
+      const rincian_keluhan = `
+      <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
+        <h2 class="accordion-header" id="flush-heading${counter}">
+          <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
+            <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
+              <span>${keluhan.fields.tanggal}</span>
+              <span>${keluhan.fields.tema}</span>
+              <span style="margin-left: auto; margin-right: 20px;">dari: ${namaPasien}</span>
+            </div>
+          </button>
+        </h2>
+        <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <div class="d-flex flex-column flex-gap" style="width: 100%; flex-flow: row wrap;">
+              <span style="margin-bottom: -16px;">keluhan:</span>
+              <span style="overflow: scroll;">&emsp;${keluhan.fields.deskripsi}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      `;
+
+      counter += 1;
+      daftar_keluhan.append(rincian_keluhan);
+    }
   })
 };
 

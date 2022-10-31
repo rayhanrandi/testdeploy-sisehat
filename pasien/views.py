@@ -12,21 +12,31 @@ from registrasi.models import Dokter, Pasien
 
 def riwayat(request):
     try:
+        pasien = Pasien.objects.get(user=request.user)
+    except (TypeError, Pasien.DoesNotExist):
+        pasien = False
+
+    try:
         dokter = Dokter.objects.get(user=request.user)
     except (TypeError, Dokter.DoesNotExist):
-        dokter = None
+        dokter = False
 
-    context = {'dokter':dokter}
+    context = {'pasien':pasien, 'dokter':dokter}
     return render(request, "riwayat.html", context)
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def keluhan(request):
     try:
         pasien = Pasien.objects.get(user=request.user)
-    except Pasien.DoesNotExist:
-        pasien = None
+    except (TypeError, Pasien.DoesNotExist):
+        pasien = False
 
-    context = {'pasien':pasien, 'rincian_keluhan':RincianKeluhan()}
+    try:
+        dokter = Dokter.objects.get(user=request.user)
+    except (TypeError, Dokter.DoesNotExist):
+        dokter = False
+
+    context = {'pasien':pasien, 'dokter':dokter, 'rincian_keluhan':RincianKeluhan()}
     return render(request, "keluhan.html", context)
 
 @login_required(login_url='/registrasi/halaman-masuk/')
@@ -76,15 +86,32 @@ def mengeluh(request):
         return render(request, "keluhan.html", context)
 
 @login_required(login_url='/registrasi/halaman-masuk/')
-def daftar_keluhan(request):
-    try:
-        pasien = Pasien.objects.get(user=request.user)
-    except Pasien.DoesNotExist:
-        pasien = None
-        
-    daftar_keluhan = Keluhan.objects.filter(pasien=pasien)
+def daftar_keluhan(request, nilai):
+    if nilai == "kosong":
+        nilai = ""
+
+    if request.COOKIES.get("user_type") == "pasien":
+        try:
+            pasien = Pasien.objects.get(user=request.user)
+        except Pasien.DoesNotExist:
+            pasien = None
+            
+        daftar_keluhan = Keluhan.objects.filter(pasien=pasien)
+
+    if request.COOKIES.get("user_type") == "dokter":
+        try:
+            dokter = Dokter.objects.get(user=request.user)
+        except Dokter.DoesNotExist:
+            dokter = None
+            
+        daftar_keluhan = Keluhan.objects.filter(dokter=dokter)
+
+    daftar_keluhan_terpilih = set()
+    for keluhan in daftar_keluhan:
+        if nilai.lower().strip() in keluhan.tema.lower().strip():
+            daftar_keluhan_terpilih.add(keluhan)
     
-    return HttpResponse(serializers.serialize("json", daftar_keluhan), content_type="application/json")
+    return HttpResponse(serializers.serialize("json", daftar_keluhan_terpilih), content_type="application/json")
 
 def daftar_dokter(request):
     try:
@@ -140,7 +167,8 @@ def cari_identitas(request, nama):
 def log_out(request):
     logout(request)
 
-    response = HttpResponseRedirect(reverse('halaman_utama:index'))
+    response = HttpResponseRedirect(reverse('halaman_utama:halaman_masuk'))
+    print(reverse('halaman_utama:halaman_masuk'))
     response.delete_cookie('username')
     response.delete_cookie('last_login')
     

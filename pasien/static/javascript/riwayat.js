@@ -11,7 +11,8 @@ function getCookie(name) {
 $(document).ready(() => {
   const hanyaCariDokter = false
   ambilDaftarDokter(hanyaCariDokter);
-  ambilRiwayatPenyakit();
+
+  if (getCookie("user_type") === "pasien") ambilRiwayatPenyakit();
 })
 
 function homepage() {
@@ -32,8 +33,8 @@ function bikinKeluhan() {
   });
 }
 
-function isiTarikTurunDokterAtas(data) {
-  const tarikTurunDokter = $('#tarik-turun-dokter-atas');
+function isiTarikTurunDokter(data) {
+  const tarikTurunDokter = $('#tarik-turun-dokter');
   tarikTurunDokter.empty();
 
   const himpunanDokter = new Set();
@@ -44,7 +45,7 @@ function isiTarikTurunDokterAtas(data) {
   })
 
   const daftarDokter = `
-    <li><a id="id-dokter-kosong-atas" class="dropdown-item" onclick="gantiDokterTerpilihAtas('id-dokter-kosong-atas')">—</a></li>  
+    <li><a id="id-dokter-kosong" class="dropdown-item" onclick="gantiDokterTerpilih('id-dokter-kosong')">—</a></li>  
     `;
 
   tarikTurunDokter.append(daftarDokter);
@@ -52,35 +53,7 @@ function isiTarikTurunDokterAtas(data) {
   var counter = 0;
   himpunanDokter.forEach(namaDokter => {
     const pilihDokter = `
-    <li><a id="id-dokter-atas-${counter}" class="dropdown-item" onclick="gantiDokterTerpilihAtas('id-dokter-atas-${counter}')">${namaDokter}</a></li>  
-    `;
-
-    counter += 1;
-    tarikTurunDokter.append(pilihDokter);
-  })
-}
-
-function isiTarikTurunDokterBawah(data) {
-  const tarikTurunDokter = $('#tarik-turun-dokter-bawah');
-  tarikTurunDokter.empty();
-
-  const himpunanDokter = new Set();
-
-  data.forEach(dokter => {
-    const namaDokter = cariPengguna(dokter.pk)
-    himpunanDokter.add(namaDokter);
-  })
-
-  const daftarDokter = `
-    <li><a id="id-dokter-kosong-bawah" class="dropdown-item" onclick="gantiDokterTerpilihBawah('id-dokter-kosong-bawah')">—</a></li>  
-    `;
-
-  tarikTurunDokter.append(daftarDokter);
-
-  var counter = 0;
-  himpunanDokter.forEach(namaDokter => {
-    const pilihDokter = `
-    <li><a id="id-dokter-bawah-${counter}" class="dropdown-item" onclick="gantiDokterTerpilihBawah('id-dokter-bawah-${counter}')">${namaDokter}</a></li>  
+    <li><a id="id-dokter-${counter}" class="dropdown-item" onclick="gantiDokterTerpilih('id-dokter-${counter}')">${namaDokter}</a></li>  
     `;
 
     counter += 1;
@@ -109,34 +82,6 @@ function isiTarikTurunRumahSakitAtas(data) {
   himpunanRumahSakit.forEach(namaRumahSakit => {
     const pilihRumahSakit = `
     <li><a id="id-rumah-sakit-atas-${counter}" class="dropdown-item" onclick="gantiRumahSakitTerpilihAtas('id-rumah-sakit-atas-${counter}')">${namaRumahSakit}</a></li>  
-    `;
-
-    counter += 1;
-    tarikTurunRumahSakit.append(pilihRumahSakit);
-  })
-}
-
-function isiTarikTurunRumahSakitTengah(data) {
-  const tarikTurunRumahSakit = $('#tarik-turun-rumah-sakit-tengah');
-  tarikTurunRumahSakit.empty();
-
-  const himpunanRumahSakit = new Set();
-
-  data.forEach(dokter => {
-    const namaRumahSakit = dokter.fields.nama_rumah_sakit;
-    himpunanRumahSakit.add(namaRumahSakit);
-  })
-
-  const daftarRumahSakit = `
-    <li><a id="id-rumah-sakit-kosong-tengah" class="dropdown-item" onclick="gantiRumahSakitTerpilihTengah('id-rumah-sakit-kosong-tengah')">—</a></li>  
-    `;
-
-  tarikTurunRumahSakit.append(daftarRumahSakit);
-
-  var counter = 0;
-  himpunanRumahSakit.forEach(namaRumahSakit => {
-    const pilihRumahSakit = `
-    <li><a id="id-rumah-sakit-tengah-${counter}" class="dropdown-item" onclick="gantiRumahSakitTerpilihTengah('id-rumah-sakit-tengah-${counter}')">${namaRumahSakit}</a></li>  
     `;
 
     counter += 1;
@@ -186,11 +131,11 @@ function ambilDaftarDokter(hanyaCariDokter, nilai="") {
     if (hanyaCariDokter) {
       tampilkanDokter(himpunanDokter, nilai);
     } else {
-      isiTarikTurunRumahSakitAtas(himpunanDokter);
-      isiTarikTurunRumahSakitTengah(himpunanDokter);
-      isiTarikTurunRumahSakitBawah(himpunanDokter);
-      isiTarikTurunDokterAtas(himpunanDokter);
-      isiTarikTurunDokterBawah(himpunanDokter);
+      if (getCookie("user_type") == "pasien") {
+        isiTarikTurunRumahSakitAtas(himpunanDokter);
+        isiTarikTurunRumahSakitBawah(himpunanDokter);
+        isiTarikTurunDokter(himpunanDokter);
+      }
 
       tampilkanDokter(himpunanDokter, nilai);
     }
@@ -246,24 +191,14 @@ function tampilkanDokter(himpunanDokter, nilai) {
   })
 }
 
-function gantiDokterTerpilihAtas(idDokter) {
+function gantiDokterTerpilih(idDokter) {
   let dokterPilihan = document.getElementById(idDokter).innerHTML;
-  document.getElementById("dokter-pilihan-atas").innerHTML = dokterPilihan;
-}
-
-function gantiDokterTerpilihBawah(idDokter) {
-  let dokterPilihan = document.getElementById(idDokter).innerHTML;
-  document.getElementById("dokter-pilihan-bawah").innerHTML = dokterPilihan;
+  document.getElementById("dokter-pilihan").innerHTML = dokterPilihan;
 }
 
 function gantiRumahSakitTerpilihAtas(idRumahSakit) {
   let rumahSakitPilihan = document.getElementById(idRumahSakit).innerHTML;
   document.getElementById("rumah-sakit-pilihan-atas").innerHTML = rumahSakitPilihan;
-}
-
-function gantiRumahSakitTerpilihTengah(idRumahSakit) {
-  let rumahSakitPilihan = document.getElementById(idRumahSakit).innerHTML;
-  document.getElementById("rumah-sakit-pilihan-tengah").innerHTML = rumahSakitPilihan;
 }
 
 function gantiRumahSakitTerpilihBawah(idRumahSakit) {

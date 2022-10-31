@@ -90,6 +90,7 @@ def pasien_masuk(request):
             login(request, user)
             response = HttpResponseRedirect("/pasien/riwayat/")
             response.set_cookie('username', username)
+            response.set_cookie('user_type', 'pasien')
             response.set_cookie('last_login', str(datetime.datetime.now().strftime('%b %d %Y %H:%M:%S')))
             return response
         else:
@@ -113,6 +114,7 @@ def dokter_masuk(request):
             login(request, user)
             response = HttpResponseRedirect("/dokter/riwayat-penyakit/")
             response.set_cookie('username', username)
+            response.set_cookie('user_type', 'dokter')
             response.set_cookie('last_login', str(datetime.datetime.now().strftime('%b %d %Y %H:%M:%S')))
             return response
         else:
