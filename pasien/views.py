@@ -154,11 +154,11 @@ def cari_identitas(request, nama):
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def log_out(request):
-    logout(request)
+    response = HttpResponseRedirect('/registrasi/halaman-masuk/')
 
-    response = HttpResponseRedirect(reverse('halaman_utama:halaman_masuk'))
-    print(reverse('halaman_utama:halaman_masuk'))
     response.delete_cookie('username')
+    response.delete_cookie('user_type')
     response.delete_cookie('last_login')
-    
+
+    logout(request)
     return response

@@ -128,16 +128,13 @@ function ambilDaftarDokter(hanyaCariDokter, nilai="") {
       himpunanDokter.add(dokter)
     })
 
-    if (hanyaCariDokter) {
-      tampilkanDokter(himpunanDokter, nilai);
-    } else {
-      if (getCookie("user_type") == "pasien") {
-        isiTarikTurunRumahSakitAtas(himpunanDokter);
-        isiTarikTurunRumahSakitBawah(himpunanDokter);
-        isiTarikTurunDokter(himpunanDokter);
-      }
-
-      tampilkanDokter(himpunanDokter, nilai);
+    tampilkanDokter(himpunanDokter, nilai);
+    if (!hanyaCariDokter) {
+      isiTarikTurunRumahSakitAtas(himpunanDokter);
+      isiTarikTurunRumahSakitBawah(himpunanDokter);
+      
+      if (getCookie("username") == "pasien") isiTarikTurunDokter(himpunanDokter);
+      else console.log("..");
     }
   });
 }

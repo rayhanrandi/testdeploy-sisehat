@@ -18,56 +18,6 @@ function homepage() {
   });
 }
 
-function isiTarikTurunDokter(data) {
-  const tarikTurunDokter = $('.tarik-turun-dokter');
-  tarikTurunDokter.empty();
-
-  const himpunanDokter = new Set();
-
-  data.forEach(dokter => {
-    const namaDokter = cariPengguna(dokter.pk)
-    himpunanDokter.add(namaDokter);
-  })
-
-  var counter = 0;
-  himpunanDokter.forEach(namaDokter => {
-    const pilihDokter = `
-    <li><a id="id-dokter-${counter}" class="dropdown-item" onclick="gantiDokterTerpilih('id-dokter-${counter}')">${namaDokter}</a></li>  
-    `;
-
-    counter += 1;
-    tarikTurunDokter.append(pilihDokter);
-  })
-}
-
-function isiTarikTurunRumahSakit(data) {
-  const tarikTurunRumahSakit = $('.tarik-turun-rumah-sakit');
-  tarikTurunRumahSakit.empty();
-
-  const himpunanRumahSakit = new Set();
-
-  data.forEach(dokter => {
-    const namaRumahSakit = dokter.fields.nama_rumah_sakit;
-    himpunanRumahSakit.add(namaRumahSakit);
-  })
-
-  const daftarRumahSakit = `
-    <li><a id="id-rumah-sakit-kosong" class="dropdown-item" onclick="gantiRumahSakitTerpilih('id-rumah-sakit-kosong')">—</a></li>  
-    `;
-
-  tarikTurunRumahSakit.append(daftarRumahSakit);
-
-  var counter = 0;
-  himpunanRumahSakit.forEach(namaRumahSakit => {
-    const pilihRumahSakit = `
-    <li><a id="id-rumah-sakit-${counter}" class="dropdown-item" onclick="gantiRumahSakitTerpilih('id-rumah-sakit-${counter}')">${namaRumahSakit}</a></li>  
-    `;
-
-    counter += 1;
-    tarikTurunRumahSakit.append(pilihRumahSakit);
-  })
-}
-
 function lihatRiwayat() {
   $.ajax({
     type: 'GET',
@@ -75,32 +25,6 @@ function lihatRiwayat() {
   }).done(function(data) {
     window.location = "/pasien/riwayat/";
   });
-}
-
-function ambilDaftarDokter() {
-  const himpunanDokter = new Set()
-
-  $.ajax({
-    type: "GET",
-    url: "/pasien/daftar-dokter/"
-  }).done(function (data) {
-    data.forEach(dokter => {
-      himpunanDokter.add(dokter)
-    })
-
-    isiTarikTurunRumahSakit(himpunanDokter)
-    isiTarikTurunDokter(himpunanDokter)
-  });
-}
-
-function gantiDokterTerpilih(idDokter) {
-  let dokterPilihan = document.getElementById(idDokter).innerHTML;
-  document.getElementById("dokter-pilihan").innerHTML = dokterPilihan;
-}
-
-function gantiRumahSakitTerpilih(idRumahSakit) {
-  let rumahSakitPilihan = document.getElementById(idRumahSakit).innerHTML;
-  document.getElementById("rumah-sakit-pilihan").innerHTML = rumahSakitPilihan;
 }
 
 function bikinKeluhan() {
@@ -113,10 +37,7 @@ function bikinKeluhan() {
     url: "/pasien/mengeluh/",
     data: rincian_keluhan.serialize(),
   }).done(function (data) {
-    // mengosongkan formulir
     rincian_keluhan.trigger("reset");
-
-    // memperbarui daftar
     ambilDaftarKeluhan();
   });
 

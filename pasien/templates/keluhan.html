@@ -27,14 +27,14 @@
 
             <!-- return button -->
             <div style="margin: auto;">
-                {% if pasien is not False %}
+                {% if pasien %}
                 <button type="button" class="btn btn-primary box-shadow rectangular-button" style="width: 160px;" onclick="lihatRiwayat()">Lihat Riwayat</button>
                 {% else %}
                 <button type="button" class="btn btn-primary box-shadow rectangular-button" style="width: 160px;" onclick="lihatRiwayat()">Kembali</button>
                 {% endif %}
             </div>
 
-            {% if pasien is not False %}
+            {% if pasien %}
             <!-- button to create complaint(s) -->
             <div style="margin-right: auto;">
             
@@ -95,22 +95,6 @@
 
                 <!-- text input -->
                 <span><input id="masukan-tema-keluhan" class="form-control" type="text" size="16" onkeyup="masukanPengguna('masukan-tema-keluhan')"></span>
-
-                {% if pasien is not False %}
-                <span>dan rumah sakit</span>
-
-                <!-- select option(s) -->
-                <span>
-                    <div class="dropdown">
-                        <button id="rumah-sakit-pilihan" class="btn btn-light dropdown-toggle" style="width: 120px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            berikut
-                        </button>
-                        <ul class="dropdown-menu tarik-turun-rumah-sakit">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                        </ul>
-                    </div>
-                </span>
-                {% endif %}
 
             </div>
         </div>
