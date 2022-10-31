@@ -10,34 +10,23 @@ from pasien.forms import RincianKeluhan
 from pasien.models import Keluhan
 from registrasi.models import Dokter, Pasien
 
-def riwayat(request):
-    try:
-        pasien = Pasien.objects.get(user=request.user)
-    except (TypeError, Pasien.DoesNotExist):
-        pasien = False
-
-    try:
-        dokter = Dokter.objects.get(user=request.user)
-    except (TypeError, Dokter.DoesNotExist):
+def menentukanTipePengguna(request):
+    if request.COOKIES.get("user_type") == "pasien":
+        pasien = True
         dokter = False
 
-    context = {'pasien':pasien, 'dokter':dokter}
-    return render(request, "riwayat.html", context)
+    if request.COOKIES.get("user_type") == "dokter":
+        pasien = False
+        dokter = True
+
+    return {'pasien':pasien, 'dokter':dokter}
+
+def riwayat(request):
+    return render(request, "riwayat.html", menentukanTipePengguna(request))
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def keluhan(request):
-    try:
-        pasien = Pasien.objects.get(user=request.user)
-    except (TypeError, Pasien.DoesNotExist):
-        pasien = False
-
-    try:
-        dokter = Dokter.objects.get(user=request.user)
-    except (TypeError, Dokter.DoesNotExist):
-        dokter = False
-
-    context = {'pasien':pasien, 'dokter':dokter, 'rincian_keluhan':RincianKeluhan()}
-    return render(request, "keluhan.html", context)
+    return render(request, "keluhan.html", menentukanTipePengguna(request))
 
 @login_required(login_url='/registrasi/halaman-masuk/')
 def mengeluh(request):
