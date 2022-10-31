@@ -2,9 +2,10 @@ import datetime
 import re
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render
 
 from registrasi.forms import HalamanMasuk, MendaftarDokter, MendaftarPasien
@@ -119,3 +120,9 @@ def dokter_masuk(request):
             messages.info(request, 'username or password may be wrong!')
     
     return render(request, 'dokter_masuk.html', {'halaman_masuk':HalamanMasuk()})
+
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('halaman_utama:landing_page'))
+    response.delete_cookie('last_login')
+    return response

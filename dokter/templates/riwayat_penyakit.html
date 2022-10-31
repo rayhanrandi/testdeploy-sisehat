@@ -11,10 +11,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tahoma">
   <link rel="stylesheet" href="{% static 'css/riwayat_penyakit.css' %}">
   <script src="{% static 'js/riwayat_penyakit.js' %}"></script>
-
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
@@ -31,6 +30,35 @@
 
 {% block content %}
 
+<nav class="navbar navbar-expand-lg ">
+  <div class="container">
+    <div class="container-fluid d-flex align-items-center justify-content-between w-full">
+      <a class="navbar-brand" href="{% url 'dokter:home' %}"><img src="{% static 'images/logo.png' %}" alt="img" style="max-width: 90px; max-height: 90px; padding: left -20px; "></img> SiSehat</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ms-auto">
+          <!-- <a class="nav-link" id="idNavbar" aria-current="page" href="{% url 'dokter:home'}">Home</a>
+          <a class="nav-link" id="idNavbar" href="{% url 'dokter:home'}">About Us</a>
+          <a class="nav-link" id="idNavbar" href="{% url 'dokter:home'}">Features</a>
+          <a class="nav-link " id="idNavbar" href="{% url 'dokter:home'}">Feedback</a> -->
+
+          {% if user.is_authenticated %}
+            <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i><a class="nav-link" href="{% url 'registrasi:logout' %}">Hi, {{ request.user }}. Logout?</a></li>
+            <li class="scroll-to-section">
+              <!-- <button><a style="color: #EAE0CC;" href="{% url 'registrasi:logout' %}">Logout</a></button> -->
+            </li>
+          {% else %}
+            <a class="nav-link btn " id="btnLogin" href="/registrasi/halaman-masuk/">Login</a>
+            <li class="scroll-to-section"><div class="border-first-button"><a href="#">Login</a></div></li> 
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -64,19 +92,19 @@
 
 <body>
 
-    <nav class="navbar">
+    <!-- <nav class="navbar">
       <div class="container-fluid">
         <a id="title" class="navbar-brand" href="">SiSehat</a>
         <button id="navbar-buttons" type="button" class="btn btn-danger"><a href="">Logout</a></button>
       </div>
-    </nav>
+    </nav> -->
 
     <div class="page-title">
       <br><br>
-      <h1 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Lihat Riwayat Penyakit</h1>
+      <h1 style="font-family: Tahoma, sans-serif; font-weight: bold;">Lihat Riwayat Penyakit</h1>
     </div>
 
-    <div class="content">
+    <div id="penyakit" class="content">
         
         <br>
 
@@ -86,11 +114,13 @@
                 <option>{{ pasien.nomor_induk_kependudukan }}</option>
             {% endfor %}
         </select>
-        <br>
-        <button id="select-pasien" type="submit" class="btn btn-success" onclick=getPenyakit()>Lihat Riwayat</button>
-        <br><br>
+        <div class="page-title">
+          <br>
+          <h1 style="font-family: Tahoma, sans-serif; font-weight: bold;">Penyakit</h1>
+          <!-- <a href="#keluhan" style="font-family: Tahoma, sans-serif; font-weight: bold;">Lihat Keluhan</a> -->
+        </div>
         
-        <h6 class="note">*klik tombol status pada kolom sembuh untuk men-set status kesembuhan</h6>
+        <h6 class="note">*klik ikon status pada kolom sembuh untuk men-set status kesembuhan</h6>
         <table class="display">
           <tr class="table-header">
             <th>Nama Penyakit</th>
@@ -101,11 +131,37 @@
         </table>
         <br>
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             Add Penyakit
-        </button>
+        </button> -->
 
     </div>
+
+    <div class="page-title">
+      <br><br>
+      <h1 style="font-family: Tahoma, sans-serif; font-weight: bold;">Keluhan</h1>
+    </div>
+
+    <div id="keluhan" class="content">
+        
+      <br>
+      
+      <table class="display-keluhan">
+        <tr class="table-header">
+          <th>Tema</th>
+          <th>Tanggal</th>
+          <th>Deskripsi</th>
+        </tr>
+      </table>
+      <br>
+
+      <button id="select-pasien" type="submit" class="btn btn-success" onclick=show()>Lihat Riwayat</button>
+
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Add Penyakit
+      </button>
+
+  </div>
 
 </body>
 

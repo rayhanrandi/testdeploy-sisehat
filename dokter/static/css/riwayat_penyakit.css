@@ -31,6 +31,7 @@ th, tr, td {
     width: auto;
 }
 
+
 .table-header {
   background-color: #4d6a6d75;
 }
@@ -42,32 +43,17 @@ th, tr, td {
     margin-bottom: auto;
 }
 
-.navbar {
-    background-color: var(--accent1);
-    height: 100px;
-}
-
 .page-title {
   margin-left: 10%;
   text-align: left;
   color: var(--accent1);
-  font-family: 'Courier New', Courier, monospace;
+  font-family: Tahoma, sans-serif;
   font-weight: bolder;
-  text-shadow: -0.2px -0.2px 0 black, 0.2px -0.2px 0 black, -0.2px 0.2px 0 black, 0.2px 0.2px 0 black;;
 }
 
 .note {
   font-style: italic;
   font-size: smaller;
-}
-
-#title {
-    font-family: Tahoma, sans-serif;
-    font-size: 50px;
-    font-weight: bold;
-    font-variant: small-caps;
-    color: white;
-    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
 }
 
 #penyakit-toggle {
@@ -79,20 +65,58 @@ th, tr, td {
     outline: none;
 }
 
-a:link {
-    color: var(--white);
-    background-color: transparent;
-    text-decoration: none;
+.navbar-brand {
+    color: #EAE0CC;
+    font-size: 70px;
+    font-family: Tahoma, sans-serif;
+    /* text-shadow: 2px 2px 8px #FFF; */
+    font-weight: bolder;
+    }
+
+.navbar {
+    background-color: #4d6a6d;
+
 }
 
-a:visited {
-    color: var(--white);
-    background-color: transparent;
-    text-decoration: none;
+.nav-link:hover::after {
+    content:  '';
+    display: block;
+    border-bottom: 2px solid #EAE0CC;
+    width: 50%;
+    margin: auto;
+    padding-bottom: 2px;
+    margin-bottom: -8px ;
+    font-size: 70px;
+    font-weight: bolder;
 }
 
-a:hover {
-    color: var(--white);
-    background-color: transparent;
-    text-decoration: none;
+.nav-link {
+    color: #EAE0CC;
+    font-family: Tahoma, sans-serif;
+    text-transform: uppercase;
+    margin-right: 40px;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+#btnLogin {
+    background-color: #A0A083;
+}
+
+.border-first-button a {
+    display: inline-block !important;
+    padding: 10px 20px !important;
+    color: #4d6a6d !important;
+    border: 1px solid #4d6a6d !important;
+    border-radius: 23px;
+    font-weight: 500 bolder !important;
+    letter-spacing: 0.3px !important;
+    transition: all 0.5s;
+
+}
+
+.border-first-button a:hover {
+    background-color: #4d6a6d;
+    color: #fff !important;
+
 }

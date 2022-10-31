@@ -166,10 +166,9 @@
             <a class="nav-link " id="idNavbar" href="#feedback">Feedback</a>
 
             {% if user.is_authenticated %}
-            <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{
-              user.get_username }}</li>
+            <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{ request.user }}</li>
             <li class="scroll-to-section">
-              <div class="border-first-button"><a href="/authentication/log-out">Logout</a></div>
+              <div class="border-first-button"><a href="{% url 'registrasi:logout' %}">Logout</a></div>
             </li>
             {% else %}
             <a class="nav-link btn " id="btnLogin" href="/registrasi/halaman-masuk/">Login</a>
@@ -271,7 +270,7 @@
               <p>Lihat obat adalah salah satu fitur yang ada di Website SiSehat. Layanan ini berfungsi
                 untuk mmengecek  Obat yang harus di konsumsi sesuai takaran dokter per waktunnya.</p>
               <br>
-              <a href="/your-medicine">
+              <a href="{/your-medicine}">
                 <button style="border-radius: 100px; font-family: 'Tahoma';  background-color: #4d6a6d; width: 100%;" type="button"
                   class="btn btn-primary btn-lg">Lihat Disini</button>
               </a>
@@ -285,7 +284,7 @@
               <br>
               <p>Lihat Riwayat adalah salah satu fitur dari Website SiSehat untuk mencatat riwayat penyakit pasien yang pernah berobat di rumah sakit dari mitra kami.</p>
               <br>
-              <a href="/your-routine">
+              <a href="{% url 'dokter:show_riwayat_penyakit' %}">
                 <button style="border-radius: 20px; font-family: 'Tahoma'; background-color: #4d6a6d;width: 100%;" type="button"
                   class="btn btn-primary btn-lg">Lihat Disini</button>
               </a>
@@ -375,7 +374,7 @@
         </ul>
         <div class="detail">
           <h2>Abby Marvel</h2>
-          <span class="jurusan">Sistem Informas 2021</span>
+          <span class="jurusan">Sistem Informasi 2021</span>
         </div>
       </div>
 

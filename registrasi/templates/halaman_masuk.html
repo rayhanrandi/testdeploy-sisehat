@@ -170,10 +170,9 @@
             <a class="nav-link " href="/#feedback/">Feedback</a>
 
             {% if user.is_authenticated %}
-            <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{
-              user.get_username }}</li>
+            <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{ request.user }}</li>
             <li class="scroll-to-section">
-              <div class="border-first-button"><a href="#">Logout</a></div>
+              <div class="border-first-button"><a href="{% url 'registrasi:logout' %}">Logout</a></div>
             </li>
             {% else %}
             <a class="nav-link btn " id="btnLogin">Login</a>
