@@ -34,88 +34,36 @@ function bikinKeluhan() {
   });
 }
 
-function isiTarikTurunDokter(data) {
-  const tarikTurunDokter = $('#tarik-turun-dokter');
-  tarikTurunDokter.empty();
+function isiTarikTurunDiagnosis(data) {
+  const tarikTurunDiagnosis = $('#daftar-diagnosis');
+  tarikTurunDiagnosis.empty();
 
-  const himpunanDokter = new Set();
+  const himpunanDiagnosis = new Set();
 
-  data.forEach(dokter => {
-    const namaDokter = cariPengguna(dokter.pk)
-    himpunanDokter.add(namaDokter);
+  data.forEach(penyakit => {
+    const diagnosis = penyakit.fields.nama_penyakit
+    himpunanDiagnosis.add(diagnosis);
   })
 
-  const daftarDokter = `
-    <li><a id="id-dokter-kosong" class="dropdown-item" onclick="gantiDokterTerpilih('id-dokter-kosong')">—</a></li>  
+  const diagnosisKosong = `
+    <li><a id="id-diagnosis-kosong" class="dropdown-item" onclick="gantiDiagnosisTerpilih('id-diagnosis-kosong')">—</a></li>  
     `;
 
-  tarikTurunDokter.append(daftarDokter);
+  tarikTurunDiagnosis.append(diagnosisKosong);
 
   var counter = 0;
-  himpunanDokter.forEach(namaDokter => {
-    const pilihDokter = `
-    <li><a id="id-dokter-${counter}" class="dropdown-item" onclick="gantiDokterTerpilih('id-dokter-${counter}')">${namaDokter}</a></li>  
+  himpunanDiagnosis.forEach(diagnosis => {
+    const pilihDiagnosis = `
+    <li><a id="id-diagnosis-${counter}" class="dropdown-item" onclick="gantiDiagnosisTerpilih('id-diagnosis-${counter}')">${diagnosis}</a></li>  
     `;
 
     counter += 1;
-    tarikTurunDokter.append(pilihDokter);
+  tarikTurunDiagnosis.append(pilihDiagnosis);
   })
 }
 
-function isiTarikTurunRumahSakitAtas(data) {
-  const tarikTurunRumahSakit = $('#tarik-turun-rumah-sakit-atas');
-  tarikTurunRumahSakit.empty();
-
-  const himpunanRumahSakit = new Set();
-
-  data.forEach(dokter => {
-    const namaRumahSakit = dokter.fields.nama_rumah_sakit;
-    himpunanRumahSakit.add(namaRumahSakit);
-  })
-
-  const daftarRumahSakit = `
-    <li><a id="id-rumah-sakit-kosong-atas" class="dropdown-item" onclick="gantiRumahSakitTerpilihAtas('id-rumah-sakit-kosong-atas')">—</a></li>  
-    `;
-
-  tarikTurunRumahSakit.append(daftarRumahSakit);
-
-  var counter = 0;
-  himpunanRumahSakit.forEach(namaRumahSakit => {
-    const pilihRumahSakit = `
-    <li><a id="id-rumah-sakit-atas-${counter}" class="dropdown-item" onclick="gantiRumahSakitTerpilihAtas('id-rumah-sakit-atas-${counter}')">${namaRumahSakit}</a></li>  
-    `;
-
-    counter += 1;
-    tarikTurunRumahSakit.append(pilihRumahSakit);
-  })
-}
-
-function isiTarikTurunRumahSakitBawah(data) {
-  const tarikTurunRumahSakit = $('#tarik-turun-rumah-sakit-bawah');
-  tarikTurunRumahSakit.empty();
-
-  const himpunanRumahSakit = new Set();
-
-  data.forEach(dokter => {
-    const namaRumahSakit = dokter.fields.nama_rumah_sakit;
-    himpunanRumahSakit.add(namaRumahSakit);
-  })
-
-  const daftarRumahSakit = `
-    <li><a id="id-rumah-sakit-kosong-bawah" class="dropdown-item" onclick="gantiRumahSakitTerpilihBawah('id-rumah-sakit-kosong-bawah')">—</a></li>  
-    `;
-
-  tarikTurunRumahSakit.append(daftarRumahSakit);
-
-  var counter = 0;
-  himpunanRumahSakit.forEach(namaRumahSakit => {
-    const pilihRumahSakit = `
-    <li><a id="id-rumah-sakit-bawah-${counter}" class="dropdown-item" onclick="gantiRumahSakitTerpilihBawah('id-rumah-sakit-bawah-${counter}')">${namaRumahSakit}</a></li>  
-    `;
-
-    counter += 1;
-    tarikTurunRumahSakit.append(pilihRumahSakit);
-  })
+function isiTarikTurunObat(data) {
+  
 }
 
 function ambilDaftarDokter(hanyaCariDokter, nilai="") {
@@ -130,12 +78,6 @@ function ambilDaftarDokter(hanyaCariDokter, nilai="") {
     })
 
     tampilkanDokter(himpunanDokter, nilai);
-    if (!hanyaCariDokter) {
-      isiTarikTurunRumahSakitAtas(himpunanDokter);
-      isiTarikTurunRumahSakitBawah(himpunanDokter);
-      
-      if (getCookie("username") == "pasien") isiTarikTurunDokter(himpunanDokter);
-    }
   });
 }
 
@@ -188,19 +130,12 @@ function tampilkanDokter(himpunanDokter, nilai) {
   })
 }
 
-function gantiDokterTerpilih(idDokter) {
-  let dokterPilihan = document.getElementById(idDokter).innerHTML;
-  document.getElementById("dokter-pilihan").innerHTML = dokterPilihan;
-}
+function gantiDiagnosisTerpilih(idDiagnosis) {
+  let diagnosis = document.getElementById(idDiagnosis).innerHTML;
+  document.getElementById("diagnosis-yg-ditampilkan").innerHTML = diagnosis;
 
-function gantiRumahSakitTerpilihAtas(idRumahSakit) {
-  let rumahSakitPilihan = document.getElementById(idRumahSakit).innerHTML;
-  document.getElementById("rumah-sakit-pilihan-atas").innerHTML = rumahSakitPilihan;
-}
-
-function gantiRumahSakitTerpilihBawah(idRumahSakit) {
-  let rumahSakitPilihan = document.getElementById(idRumahSakit).innerHTML;
-  document.getElementById("rumah-sakit-pilihan-bawah").innerHTML = rumahSakitPilihan;
+  if (getCookie("user_type") == "pasien") ambilRiwayatPenyakit(diagnosis);
+  if (getCookie("user_type") == "dokter") riwayatPenyakitPasien(diagnosis);
 }
 
 async function masukanPengguna(data) {
@@ -209,84 +144,94 @@ async function masukanPengguna(data) {
   setTimeout(ambilDaftarDokter(hanyaCariDokter, nilai), 200);
 }
 
-function ambilRiwayatPenyakit() {
+function ambilRiwayatPenyakit(diagnosis="") {
   $.ajax({
     type: "GET",
     url: "/dokter/riwayat-penyakit/" + cariIdentitas(getCookie("username"))
   }).done(function (data) {
-    tampilkanRiwayatPenyakit(data)
+    tampilkanRiwayatPenyakit(data, diagnosis)
+    isiTarikTurunDiagnosis(data)
   });
 }
 
-function tampilkanRiwayatPenyakit(data) {
+function tampilkanRiwayatPenyakit(data, diagnosis="") {
   const daftarRiwayatPenyakit = $("#daftar-riwayat-penyakit");
   
   var counter = 0;
+  daftarRiwayatPenyakit.empty();
+
   data.forEach(penyakit => {
-    const rincian_penyakit = `
-    <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
-      <h2 class="accordion-header" id="flush-heading${counter}">
-        <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
-          <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
-            <span>${penyakit.fields.tanggal_diagnosis}</span>
-            <span>Diagnosis: ${penyakit.fields.nama_penyakit}</span>
-          </div>
-        </button>
-      </h2>
-      <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#daftar-riwayat-penyakit">
-        <div class="accordion-body">
-          <div class="d-flex flex-column flex-gap align-items-start" style="width: 100%; flex-flow: row wrap;">
-            <span style="margin-bottom: -16px;">deskripsi:</span>
-            <span style="overflow: scroll;">&emsp;${penyakit.fields.deskripsi_keluhan}</span>
+    if (penyakit.fields.nama_penyakit == diagnosis || diagnosis == "" || diagnosis == "—") {
+      const rincian_penyakit = `
+      <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
+        <h2 class="accordion-header" id="flush-heading${counter}">
+          <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
+            <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
+              <span>${penyakit.fields.tanggal_diagnosis}</span>
+              <span>Diagnosis: ${penyakit.fields.nama_penyakit}</span>
+            </div>
+          </button>
+        </h2>
+        <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#daftar-riwayat-penyakit">
+          <div class="accordion-body">
+            <div class="d-flex flex-column flex-gap align-items-start" style="width: 100%; flex-flow: row wrap;">
+              <span style="margin-bottom: -16px;">deskripsi:</span>
+              <span style="overflow: scroll;">&emsp;${penyakit.fields.deskripsi_keluhan}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    `;
+      `;
 
-    counter += 1;
-    daftarRiwayatPenyakit.append(rincian_penyakit);
+      counter += 1;
+      daftarRiwayatPenyakit.append(rincian_penyakit);
+    }
   })
 }
 
-function riwayatPenyakitPasien() {
+function riwayatPenyakitPasien(diagnosis="") {
   $.ajax({
     type: "GET",
     url: `/pasien/riwayat-penyakit-pasien/dokter-${getCookie("username")}/`,
   }).done(function (data) {
-    tampilkanRiwayatPenyakitPasien(data);
+    tampilkanRiwayatPenyakitPasien(data, diagnosis);
+    isiTarikTurunDiagnosis(data)
   });
 }
 
-function tampilkanRiwayatPenyakitPasien(data) {
+function tampilkanRiwayatPenyakitPasien(data, diagnosis="") {
   const daftarRiwayatPenyakit = $("#daftar-riwayat-penyakit");
   
   var counter = 0;
+  daftarRiwayatPenyakit.empty();
+
   data.forEach(penyakit => {
-    const rincian_penyakit = `
-    <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
-      <h2 class="accordion-header" id="flush-heading${counter}">
-        <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
-          <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
-            <span>${penyakit.fields.tanggal_diagnosis}</span>
-            <span>Diagnosis: ${penyakit.fields.nama_penyakit}</span>
-            <span style="margin-left: 60%; position: absolute;">Pasien: ${cariPengguna(penyakit.fields.pasien)}</span>
-          </div>
-        </button>
-      </h2>
-      <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#daftar-riwayat-penyakit">
-        <div class="accordion-body">
-          <div class="d-flex flex-column flex-gap align-items-start" style="width: 100%; flex-flow: row wrap;">
-            <span style="margin-bottom: -16px;">deskripsi:</span>
-            <span style="overflow: scroll;">&emsp;${penyakit.fields.deskripsi_keluhan}</span>
+    if (penyakit.fields.nama_penyakit == diagnosis || diagnosis == "" || diagnosis == "—") {
+      const rincian_penyakit = `
+      <div class="accordion-item card-design" style="overflow: hidden; border-radius: 20px;">
+        <h2 class="accordion-header" id="flush-heading${counter}">
+          <button class="accordion-button collapsed" style="color: black;" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${counter}" aria-expanded="false">
+            <div class="d-flex flex-row flex-gap" style="width: 100%; flex-flow: row wrap;">
+              <span>${penyakit.fields.tanggal_diagnosis}</span>
+              <span>Diagnosis: ${penyakit.fields.nama_penyakit}</span>
+              <span style="margin-left: 60%; position: absolute;">Pasien: ${cariPengguna(penyakit.fields.pasien)}</span>
+            </div>
+          </button>
+        </h2>
+        <div id="flush-collapse${counter}" class="accordion-collapse collapse" data-bs-parent="#daftar-riwayat-penyakit">
+          <div class="accordion-body">
+            <div class="d-flex flex-column flex-gap align-items-start" style="width: 100%; flex-flow: row wrap;">
+              <span style="margin-bottom: -16px;">deskripsi:</span>
+              <span style="overflow: scroll;">&emsp;${penyakit.fields.deskripsi_keluhan}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    `;
+      `;
 
-    counter += 1;
-    daftarRiwayatPenyakit.append(rincian_penyakit);
+      counter += 1;
+      daftarRiwayatPenyakit.append(rincian_penyakit);
+    }
   })
 }
 
