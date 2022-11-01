@@ -147,7 +147,7 @@ async function masukanPengguna(data) {
 function ambilRiwayatPenyakit(diagnosis="") {
   $.ajax({
     type: "GET",
-    url: "/dokter/riwayat-penyakit/" + cariIdentitas(getCookie("username"))
+    url: "/pasien/riwayat-penyakit/"
   }).done(function (data) {
     tampilkanRiwayatPenyakit(data, diagnosis)
     isiTarikTurunDiagnosis(data)

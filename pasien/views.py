@@ -12,15 +12,18 @@ from pasien.models import Keluhan
 from registrasi.models import Dokter, Pasien
 
 def menentukanTipePengguna(request):
-    if request.COOKIES.get("user_type") == "pasien":
-        pasien = True
+    if request.user != "AnonymousUser" and request.COOKIES.get("user_type") == "pasien":
+        if request.COOKIES.get("user_type") == "pasien":
+            pasien = True
+            dokter = False
+        else:
+            pasien = False
+            dokter = True
+    else:
+        pasien = False
         dokter = False
 
-    if request.COOKIES.get("user_type") == "dokter":
-        pasien = False
-        dokter = True
-
-    return {'pasien':pasien, 'dokter':dokter}
+    return {'pasien':pasien, 'dokter':dokter, "rincian_keluhan":RincianKeluhan()}
 
 def riwayat(request):
     return render(request, "riwayat.html", menentukanTipePengguna(request))
@@ -110,6 +113,24 @@ def daftar_dokter(request):
         dokter = None
     
     return HttpResponse(serializers.serialize("json", dokter), content_type="application/json")
+
+def riwayat_penyakit(request):
+    try:
+        pengguna = User.objects.filter(username=request.COOKIES.get("username"))[0]
+    except (IndexError, User.DoesNotExist):
+        pengguna = None
+
+    try:
+        pasien = Pasien.objects.filter(user=pengguna)[0]
+    except (IndexError, NameError, Pasien.DoesNotExist):
+        pasien = None
+    
+    try:
+        riwayat_penyakit = Penyakit.objects.filter(pasien=pasien)
+    except (IndexError, NameError, Penyakit.DoesNotExist):
+        riwayat_penyakit = None
+    
+    return HttpResponse(serializers.serialize("json", riwayat_penyakit), content_type="application/json")
 
 def riwayat_penyakit_pasien(request, nama):
     try:

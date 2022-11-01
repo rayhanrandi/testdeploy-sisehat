@@ -9,6 +9,54 @@ $(document).ready(() => {
   ambilDaftarDokter();
 })
 
+function ambilDaftarDokter(hanyaCariDokter, nilai="") {
+  const himpunanDokter = new Set()
+
+  $.ajax({
+    type: "GET",
+    url: "/pasien/daftar-dokter/"
+  }).done(function (data) {
+    data.forEach(dokter => {
+      himpunanDokter.add(dokter)
+    })
+
+    isiTarikTurunDokter(himpunanDokter);
+  });
+}
+
+function isiTarikTurunDokter(data) {
+  const tarikTurunDokter = $('#dokter-yg-ditampilkan');
+  tarikTurunDokter.empty();
+
+  const himpunanDokter = new Set();
+
+  data.forEach(dokter => {
+    const namaDokter = cariPengguna(dokter.pk)
+    himpunanDokter.add(namaDokter);
+  })
+
+  const dokterKosong = `
+    <li><a id="id-dokter-kosong" class="dropdown-item" onclick="gantiDokterTerpilih('id-dokter-kosong')">—</a></li>  
+    `;
+
+    tarikTurunDokter.append(dokterKosong);
+
+  var counter = 0;
+  himpunanDokter.forEach(namaDokter => {
+    const pilihDokter = `
+    <li><a id="id-dokter-${counter}" class="dropdown-item" onclick="gantiDokterTerpilih('id-dokter-${counter}')">${namaDokter}</a></li>  
+    `;
+
+    counter += 1;
+    tarikTurunDokter.append(pilihDokter);
+  })
+}
+
+function gantiDokterTerpilih(idDokter) {
+  let dokter = document.getElementById(idDokter).innerHTML;
+  document.getElementById("dokter-pilihan").innerHTML = dokter;
+}
+
 function homepage() {
   $.ajax({
     type: 'GET',
