@@ -50,13 +50,12 @@
             <a class="nav-link " id="idNavbar" href="#feedback">Feedback</a> -->
   
             {% if user.is_authenticated %}
-            <li style="font-weight:bolder; color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hi, {{ request.user }}</li>
+            <li style="font-weight: bolder; color: #EAE0CC; padding-top: 8px; padding-right: 50px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Hello, {{ request.user }}!</li>
             <li class="scroll-to-section">
-              <div class="border-first-button"><a href="{% url 'registrasi:logout' %}">Logout</a></div>
+              <a class="nav-link btn " style="padding-left: auto;" id="btnLogin" href="{% url 'registrasi:logout' %}">Logout</a>
             </li>
             {% else %}
             <a class="nav-link btn " id="btnLogin" href="/registrasi/halaman-masuk/">Login</a>
-            <li class="scroll-to-section"><div class="border-first-button"><a href="#">Login</a></div></li> 
             {% endif %}
           </div>
         </div>
@@ -75,16 +74,7 @@
                   </div>
               </div>                  
               <div class="container">
-                  <div class="card-container">
-                      {% for i in feedback %}
-                      <div style="border-radius: 20px;background-color:#798478; box-shadow: 7px 7px 10px 2px #4D6A6D; margin-bottom: 52px;" class="card">
-                          <h6 style="text-align: center; color: #bbbbbb; padding-top: 16px;">Nama:</h6>
-                          <h3 style="text-align: center; color: #fff; font-size: medium; word-break: break-all; padding-top: 4px;">{{ i.name }}</h3>
-                          <br>
-                          <h6 style="text-align: center; color: #bbbbbb; padding-top: 16px;">Message:</h6>
-                          <p style="text-align: center; color: #fff; font-size: medium; word-break: break-all; padding-top: 4px; padding-bottom: 16px;">{{ i.message }}</p>
-                      </div>
-                      {% endfor %}
+                  <div class="card-container" id="containerCard">
                   </div>
               </div>
           </div> 
@@ -92,5 +82,27 @@
   </div>  
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.js"integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(handleGet);
+  function handleGet(e) {
+    $.ajax({
+      type: 'GET',
+      url: "{% url 'halaman_utama:json_function' %}",
+      success: (data)=>handleSuccess(data)
+    })
+  }
+  function handleSuccess(data) {
+    for (let index = 0; index < data.length; index++) {
+      let html = ""
+      html += "<div style='border-radius: 20px;background-color:#798478; box-shadow: 7px 7px 10px 2px #4D6A6D; margin-bottom: 52px;' class='card'><h6 style='text-align: center; color: #bbbbbb; padding-top: 16px;'>Nama:</h6><h3 style='text-align: center; color: #fff; font-size: medium; word-break: break-all; padding-top: 4px;'>"
+      html+= data[index].fields.name
+      html += "</h3><br><h6 style='text-align: center; color: #bbbbbb; padding-top: 16px;'>Message:</h6><p style='text-align: center; color: #fff; font-size: medium; word-break: break-all; padding-top: 4px; padding-bottom: 16px;'>"
+      html += data[index].fields.message
+      html+= "</p></div>"
+      $("#containerCard").append(html)
+    }
+  }
+</script>
 
 {% endblock content %}
