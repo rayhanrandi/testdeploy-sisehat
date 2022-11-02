@@ -1,6 +1,6 @@
 # SiSehat
 
-## [Link Aplikasi](https://si-sehat.herokuapp.com/)
+## [Link Aplikasi](https://sisehat-group.herokuapp.com/)
 
 #### Anggota Kelompok:
 1. Abby Marvel Immanuel Parasian Pribadi
