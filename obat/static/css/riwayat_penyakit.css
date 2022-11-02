@@ -1,0 +1,122 @@
+:root {
+    --base: #eae0cc;
+    --secondary: #798478;
+    --tertiary: #a0a083;
+    --accent1: #4d6a6d;
+    --accent2: #c9ada1;
+    --red: #DC3545;
+    --blue: #0D6AF4;
+    --green: #198754;
+}
+
+body {
+    text-align: center;
+    background: var(--base);
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 80%;
+    background-color: #79847875;
+}
+
+table, th, td {
+    border: 1px solid rgb(0, 0, 0);
+}
+
+th, tr, td {
+    width: auto;
+}
+
+
+.table-header {
+  background-color: #4d6a6d75;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.page-title {
+  margin-left: 10%;
+  text-align: left;
+  color: var(--accent1);
+  font-family: Tahoma, sans-serif;
+  font-weight: bolder;
+}
+
+.note {
+  font-style: italic;
+  font-size: smaller;
+}
+
+#penyakit-toggle {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+.navbar-brand {
+    color: #EAE0CC;
+    font-size: 70px;
+    font-family: Tahoma, sans-serif;
+    /* text-shadow: 2px 2px 8px #FFF; */
+    font-weight: bolder;
+    }
+
+.navbar {
+    background-color: #4d6a6d;
+
+}
+
+.nav-link:hover::after {
+    content:  '';
+    display: block;
+    border-bottom: 2px solid #EAE0CC;
+    width: 50%;
+    margin: auto;
+    padding-bottom: 2px;
+    margin-bottom: -8px ;
+    font-size: 70px;
+    font-weight: bolder;
+}
+
+.nav-link {
+    color: #EAE0CC;
+    font-family: Tahoma, sans-serif;
+    text-transform: uppercase;
+    margin-right: 40px;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+#btnLogin {
+    background-color: #A0A083;
+}
+
+.border-first-button a {
+    display: inline-block !important;
+    padding: 10px 20px !important;
+    color: #4d6a6d !important;
+    border: 1px solid #4d6a6d !important;
+    border-radius: 23px;
+    font-weight: 500 bolder !important;
+    letter-spacing: 0.3px !important;
+    transition: all 0.5s;
+
+}
+
+.border-first-button a:hover {
+    background-color: #4d6a6d;
+    color: #fff !important;
+
+}

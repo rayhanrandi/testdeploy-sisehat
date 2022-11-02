@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/riwayat_penyakit.css' %}">
+<script src="{% static 'js/riwayat_penyakit.js' %}"></script>
+
+<script>
+
+  $(document).ready(() => {
+    console.log("test");
+    loadData();
+  })
+
+  // function obats() {
+  //   console.log("in getObats")
+  //   $.ajax({
+  //     type: "GET",
+  //     url: "/obat/json",
+  //   }).done((data) => {
+  //     console.log("about to showObat")
+  //     showObats(${'#cards'}, )
+  //   });
+  // }
+
+  // <nav class="navbar">
+  //       <a href="#" class="nav-branding">AM.</a>
+  //       <ul class="navMenu">
+  //           <li class="nav-item">
+  //           <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create Task</a>
+  //           </li>
+  //       </ul>
+  //   </nav>
+
+  function loadData(){
+    $('#cards').empty();
+   const getTaskURL = `/obat/json`;
+   $.ajax({
+     type: 'GET',
+     url: getTaskURL,
+     success: function (response) {
+       console.log(response);
+
+        for (let i = 0; i < response.length; i++){
+          showObats($('#cards'), response[i]["fields"], response[i]["pk"]);
+        }
+    },
+     error: function (response) {
+         console.log(response)
+     }
+   })
+};
+
+  function showObats($element, fields, task_id) {
+    console.log(fields);
+    const nama = fields["nama"];
+    const produsen = fields["produsen"];
+    const deskripsi = fields["deskripsi"];
+    const efek_samping = fields["efek_samping"]
+
+   console.log($element)
+    var card = 
+        `<li class="card">` +
+          `<div>` +
+            `<h3 class="card-title" align="center">${nama}</h3>` +
+            `<p>${produsen}</p>` +
+            `<h6 class="card-date" align="center">${deskripsi}</h6>` +
+            `<h6 class="card-date" align="center">${efek_samping}</h6>` +
+            `<div class="card-link-wrapper" align="center">` +
+              `<button class="btn btn-danger" type="submit" value="Delete" onclick=deleteObat(${task_id})><i></i>Delete</button>` +
+            `</div>` +
+            `<p></p>` +
+          `</div>` +
+        `</li>` +
+        `<p></p>`;
+      $($element).append(card);
+  
+  }
+
+  function deleteObat(id) {
+    $.ajax({
+      type: "GET",
+      url: "/obat/delete-obat/" + id,
+    }).done((data) => {
+      loadData();
+    })
+  }
+
+  function getFormData($form){  
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+  
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+  
+    return indexed_array;
+  }
+
+  // function createObat() {
+  //   const form = $('.newobat');
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "/obat/create-obat/",
+  //     data: form.serialize(),
+  //   }).done(function (data) {
+  //     console.log("task?")
+  //     form.trigger("reset");
+  //     obats();
+  //   })
+  //   $("#staticBackdrop").modal("hide");
+  // }
+  function createObat() {
+    const serializedData = getFormData($('#form'));
+    const addTaskURL = `/obat/create-obat/`;
+    console.log("keklik")
+    $.ajax({
+      type: 'POST',
+      url: addTaskURL,
+      data: serializedData,
+      success: function (response) {
+          // on successfull creating object
+          $("#form").trigger('reset');
+          console.log("berhasil")
+          // display the newly friend to table.
+          var instance = JSON.parse(response);
+          var fields = instance[0]["fields"];
+          var task_id = instance[0]["pk"];
+       
+          showObats($('#cards'), fields, task_id);
+      },
+      error: function (response) {
+          // alert the error if any error occured
+          alert(response["responseJSON"]["error"]);
+      }
+    })
+  };
+
+
+</script>
+
+
+
+  <header>
+    <nav class="navbar navbar-expand-lg ">
+      <div class="container">
+        <div class="container-fluid d-flex align-items-center justify-content-between w-full">
+          <a class="navbar-brand" href="{% url 'dokter:home' %}"><img src="{% static 'images/logo.png' %}" alt="img" style="max-width: 90px; max-height: 90px; padding: left -20px; "></img> SiSehat</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+              <!-- <a class="nav-link" id="idNavbar" aria-current="page" href="{% url 'dokter:home'}">Home</a>
+              <a class="nav-link" id="idNavbar" href="{% url 'dokter:home'}">About Us</a>
+              <a class="nav-link" id="idNavbar" href="{% url 'dokter:home'}">Features</a>
+              <a class="nav-link " id="idNavbar" href="{% url 'dokter:home'}">Feedback</a> -->
+    
+              {% if user.is_authenticated %}
+                <li style="color: #fff; padding-top: 8px;"><i class="fa fa-sign-out" aria-hidden="true"></i><a class="nav-link" href="{% url 'registrasi:logout' %}">Hi, {{ request.user }}. Logout?</a></li>
+                <li class="scroll-to-section">
+                  <!-- <button><a style="color: #EAE0CC;" href="{% url 'registrasi:logout' %}">Logout</a></button> -->
+                </li>
+              {% else %}
+                <a class="nav-link btn " id="btnLogin" href="/registrasi/halaman-masuk/">Login</a>
+                <li class="scroll-to-section"><div class="border-first-button"><a href="#">Login</a></div></li> 
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <h1>Daftar Obat</h1>
+  <h2>Hallo {{user}}!</h2>
+  <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="color: #fff; padding-top: 8px;"  aria-hidden="true">Create Task</a>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h1 style="font-weight: bold;"class="modal-title fs-5" id="staticBackdropLabel">Create new task</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="task-form">
+        <form class="newtask" id="form" method="POST">
+          {% csrf_token %}
+          <input id="nama" type="text" name="nama" placeholder="Title"></input>
+          <p></p>
+          <input id="produsen" type="text" name="produsen" placeholder="Produsen"></input>
+          <p></p>
+          <textarea id="deskripsi" type="text" name="deskripsi" placeholder="Deskripsi"></textarea>
+          <p></p>
+          <textarea id="efek_samping" type="text" name="efek_samping" placeholder="Efek Samping"></textarea>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button id="buttonadd" type="submit" class="btn btn-success" data-bs-dismiss="modal" onclick=createObat()>Create new task</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<ul class="cards" id="cards">
+</ul>
+
+ {% endblock content %}

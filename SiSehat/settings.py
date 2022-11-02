@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'pasien',
     'crispy_forms',
     'dokter',
+    'obat',
 ]
 
 MIDDLEWARE = [
