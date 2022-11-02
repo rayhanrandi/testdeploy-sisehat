@@ -65,13 +65,19 @@ th, tr, td {
     outline: none;
 }
 
+.logo {
+    max-width: 90px; 
+    max-height: 90px; 
+    padding: left -20px;
+}
+
 .navbar-brand {
     color: #EAE0CC;
     font-size: 70px;
     font-family: Tahoma, sans-serif;
     /* text-shadow: 2px 2px 8px #FFF; */
     font-weight: bolder;
-    }
+}
 
 .navbar {
     background-color: #4d6a6d;
@@ -119,4 +125,19 @@ th, tr, td {
     background-color: #4d6a6d;
     color: #fff !important;
 
+}
+
+@media (max-width: 500px) {
+    .logo {
+        max-width: 90px; 
+        max-height: 90px; 
+        padding: left -20px;
+    }
+
+    .navbar-brand {
+        color: #EAE0CC;
+        font-size: 35px;
+        font-family: Tahoma, sans-serif;
+        font-weight: bolder;
+    }
 }
