@@ -1,2 +1,1 @@
-release: sh -c 'python manage.py migrate'
-web: gunicorn SiSehat.wsgi --log-file -
+web: python manage.py migrate && gunicorn SiSehat.wsgi
