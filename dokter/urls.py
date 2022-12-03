@@ -1,5 +1,5 @@
 from django.urls import path
-from dokter.views import show_penyakit, get_penyakit_pasien, add_penyakit, toggle_penyakit, get_keluhan_pasien, redirect_home
+from dokter.views import show_penyakit, get_penyakit_pasien, add_penyakit, toggle_penyakit, get_keluhan_pasien, redirect_home, show_keluhan_json, show_penyakit_json, show_pasien_json
 
 app_name = 'dokter'
 
@@ -9,5 +9,8 @@ urlpatterns = [
     path('add-penyakit/<str:pasien>', add_penyakit, name='add_penyakit'),
     path('toggle-penyakit/<int:id>', toggle_penyakit, name='toggle-penyakit'),
     path('riwayat-keluhan/<str:pasien>', get_keluhan_pasien, name='get_keluhan_pasien'),
-    path('home/', redirect_home, name='home')
+    path('home/', redirect_home, name='home'),
+    path('penyakit/', show_penyakit_json, name='penyakit'),
+    path('keluhan/', show_keluhan_json, name='keluhan'),
+    path('pasien/', show_pasien_json, name='pasien'),
 ]

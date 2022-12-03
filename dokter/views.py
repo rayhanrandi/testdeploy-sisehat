@@ -88,3 +88,18 @@ def get_keluhan_pasien(request, pasien):
 
 def redirect_home(request):
     return HttpResponseRedirect(reverse('halaman_utama:landing_page'))
+
+def show_penyakit_json(request):
+    data = Penyakit.objects.all()
+    return HttpResponse(serializers.serialize("json", data),
+                        content_type="application/json")
+
+def show_keluhan_json(request):
+    data = Keluhan.objects.all()
+    return HttpResponse(serializers.serialize("json", data),
+                        content_type="application/json")
+
+def show_pasien_json(request):
+    data = Pasien.objects.all()
+    return HttpResponse(serializers.serialize("json", data),
+                        content_type="application/json")
